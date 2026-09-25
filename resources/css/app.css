@@ -265,7 +265,7 @@
     top: 205px;
     left: 50%;
     aspect-ratio: 1;
-    border: 1px solid rgb(88 100 135 / 12%);
+    border: 2px solid rgb(88 100 135 / 22%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
@@ -400,7 +400,7 @@
 
     .landing-orbit__ring {
         top: 198px;
-        border-color: rgb(88 100 135 / 10%);
+        border-color: rgb(88 100 135 / 22%);
     }
 
     .landing-orbit__ring--inner {
