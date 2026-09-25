@@ -1,6 +1,6 @@
 # Data contoh lokal
 
-`DatabaseSeeder` membuat dua kelas dasar. Pada lingkungan `local` dan `testing`, `DemoContentSeeder` menambah materi pembuka dan `RichDemoSeeder` mengisi topik, kosakata, aksara, latihan, 24 akun pelajar contoh, progres, hasil latihan, serta riwayat tutor contoh. Keduanya bisa dijalankan lagi: seeder menambah data yang belum ada tanpa menghapus materi, akun, atau aktivitas yang sudah tersimpan.
+`DatabaseSeeder` membuat dua kelas dasar. Pada lingkungan `local` dan `testing`, `DemoContentSeeder` menambah materi pembuka dan `RichDemoSeeder` mengisi topik, kosakata, aksara, latihan pilihan ganda dan isian/menulis aksara, lebih dari 15 kuis evaluasi dari materi pelajaran, satu kuis menyimak dengan tiga rekaman kalimat, 24 akun pelajar contoh, progres, hasil latihan dan kuis, kartu pengulangan terjadwal, serta riwayat tutor contoh. Kuis memiliki batas waktu, nilai lulus, dan batas percobaan; kuis menyimak meminta pelajar memilih transkrip yang cocok dengan rekaman. Seeder dapat dijalankan kembali: data demo yang belum ada akan ditambahkan tanpa menghapus materi, akun, atau aktivitas tersimpan.
 
 Jalankan dengan `php artisan migrate`, `php artisan db:seed`, dan `php artisan storage:link` pada pemasangan baru. Ketiganya sudah dijalankan pada database lokal proyek ini.
 
@@ -12,7 +12,7 @@ Rujukan isi:
 - [Kamus Indonesia–Sunda–Cerbon, Kemendikbud](https://repositori.kemendikdasmen.go.id/34665/1/Buku-Kamus19-Lengkap_compressed.pdf): “hatur nuhun”, “asup”, dan “lebet”.
 - [Tata Bahasa Sunda, Kemendikbud](https://repositori.kemendikdasmen.go.id/2644/1/Tata%20Bahasa%20Sunda%20%281984%29.pdf): kata ganti dan sapaan keluarga.
 - [Kajian pemerolehan bahasa Sunda, Kemendikbud](https://repositori.kemendikdasmen.go.id/435/): kata tanya dasar.
-- [Daftar karakter Sundanese, Unicode](https://www.unicode.org/Public/18.0.0/charts/nameslist/1b80/): aksara swara, ngalagena, tanda vokal, dan angka.
+- [Daftar karakter Sundanese, Unicode](https://www.unicode.org/Public/18.0.0/charts/nameslist/1b80/): aksara swara, ngalagena, rarangkén, dan angka; [Sundanese Supplement](https://www.unicode.org/Public/18.0.0/charts/nameslist/1cc0/) memuat tanda baca tambahan.
 
 Audio `assets/asup.wav` berasal dari [rekaman “asup” oleh Raflinoer32 di Lingua Libre/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:LL-Q34002_(sun)-Raflinoer32-asup.wav), berlisensi [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Tidak ada perubahan pada rekaman. Seeder menyalinnya ke disk `public`; jalankan `php artisan storage:link` bila tautan `public/storage` belum ada.
 

@@ -43,3 +43,10 @@ yarn-error.log
 /boost.json
 /opencode.json
 /opencode.jsonc
+
+# Local project documents that should stay out of GitHub
+/DESIGN.md
+/design.md
+/PRD.md
+/prd.md
+/database/seeders/assets/AUDIO-ATTRIBUTION.md

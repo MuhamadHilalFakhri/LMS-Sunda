@@ -20,17 +20,24 @@ Sawala adalah LMS berbasis web untuk belajar Bahasa Sunda dan Aksara Sunda. Mate
 - Dasbor dengan ringkasan kelas, progres, dan pelajaran terakhir.
 - Kelas **Bahasa Sunda** dan **Aksara Sunda** yang terpisah, dengan unit dan pelajaran berurutan.
 - Materi teks, kosakata, dialog, konteks penggunaan, ragam tutur, transliterasi, arti, dan audio jika tersedia.
+- Galeri 72 karakter Unicode Aksara Sunda: swara, ngalagena, rarangkén, angka, tanda baca, dan karakter historis. Galeri mendukung pencarian, filter kelompok, serta salin karakter.
 - Latihan pilihan ganda, isian, mencocokkan, menyusun urutan, serta latihan Aksara Sunda.
-- Hasil latihan berisi skor, jawaban benar, dan penjelasan; percobaan disimpan untuk melihat riwayat.
-- Progres pelajaran dan latihan yang dapat dilihat kembali.
+- Kuis evaluasi dengan batas waktu, nilai kelulusan, dan batas percobaan yang dapat diatur admin, termasuk soal menyimak dengan rekaman audio.
+- Hasil latihan dan kuis berisi skor, jawaban benar, dan penjelasan; riwayat percobaan disimpan.
+- Ulasan jawaban keliru dari percobaan terbaru pada setiap soal.
+- Kartu pengulangan terjadwal untuk kosakata dan aksara yang sudah dipelajari. Jadwal menyesuaikan penilaian pelajar tentang tingkat kesulitannya.
+- Target aktivitas harian, streak belajar, progres pelajaran, dan riwayat latihan.
+- Simpan blok kosakata, dialog, atau aksara untuk dipelajari kembali.
+- Daftar panjang dibagi per halaman; kurikulum kelas dapat dibuka per unit.
 - Pencarian pada judul, ringkasan, isi materi, kosakata, dan aksara di materi yang diterbitkan.
-- Tutor AI untuk tanya jawab, latihan percakapan teks, dan umpan balik tulisan. Jawaban menggunakan materi terbit yang relevan sebagai rujukan.
+- Tutor AI untuk tanya jawab, latihan percakapan teks, terjemahan Indonesia ke Sunda, dan umpan balik tulisan. Semua mode tetap berada dalam satu ruang percakapan dan menggunakan materi terbit yang relevan sebagai rujukan.
 - Pilihan bahasa tampilan **Indonesia** atau **Sunda** di pengaturan profil.
 
 ### Untuk admin
 
 - Panel admin khusus dengan akses pengelolaan konten.
-- Mengelola kelas, unit, pelajaran, blok materi, latihan, soal, serta kunci jawaban.
+- Mengelola kelas, unit, pelajaran, blok materi, latihan, kuis, soal pilihan ganda dan menyimak audio, serta kunci jawaban.
+- Mengatur nilai kelulusan, waktu, dan batas percobaan pada setiap kuis.
 - Mengisi kosakata, tulisan Latin dan Aksara Sunda, arti, konteks, ragam tutur, urutan materi, dan status konten.
 - Mengunggah audio pelafalan berformat MP3, WAV, OGG, atau M4A hingga 10 MB.
 - Mengatur status materi: draf, ditinjau, diterbitkan, atau diarsipkan.
@@ -96,7 +103,7 @@ php artisan migrate --seed
 php artisan storage:link
 ```
 
-Seeder menambahkan kelas Bahasa Sunda dan Aksara Sunda, materi contoh, latihan, audio, dan akun demo pada lingkungan `local` atau `testing`. Audio publik membutuhkan tautan `storage` dari langkah di atas.
+Seeder menambahkan kelas Bahasa Sunda dan Aksara Sunda, materi contoh, latihan, kuis pilihan ganda dan menyimak, audio, kartu pengulangan terjadwal, serta akun demo pada lingkungan `local` atau `testing`. Audio publik membutuhkan tautan `storage` dari langkah di atas.
 
 ### 4. Jalankan aplikasi
 
@@ -140,9 +147,12 @@ Untuk memakai kata sandi lain, ubah `SEED_ACCOUNT_PASSWORD` di `.env` **sebelum*
 1. Daftar dan verifikasi email, atau masuk menggunakan akun demo pelajar.
 2. Dari dasbor, pilih kelas Bahasa Sunda atau Aksara Sunda.
 3. Buka unit dan pelajaran. Dengarkan audio jika materi menyediakannya, lalu tandai pelajaran selesai.
-4. Kerjakan latihan. Setelah mengirim jawaban, buka hasil untuk melihat skor dan penjelasan.
-5. Lihat progres, gunakan pencarian materi, atau buka Tutor AI untuk bertanya dan berlatih.
-6. Ubah bahasa antarmuka melalui **Pengaturan akun → Profil → Bahasa tampilan**.
+4. Kerjakan latihan atau buka **Kuis** untuk evaluasi. Hasil menampilkan skor dan penjelasan.
+5. Buka **Ulasan jawaban** untuk mengulang jawaban keliru, atau simpan contoh materi dari dalam pelajaran.
+6. Atur target harian di beranda, lalu lihat progres belajar dan riwayat percobaan.
+7. Jelajahi **Kumpulan Aksara** untuk mencari, memfilter, dan menyalin karakter Sunda.
+8. Gunakan pencarian materi atau buka Tutor AI untuk bertanya dan berlatih.
+9. Ubah bahasa antarmuka melalui **Pengaturan akun → Profil → Bahasa tampilan**.
 
 ### Sebagai admin
 
@@ -155,8 +165,8 @@ Untuk memakai kata sandi lain, ubah `SEED_ACCOUNT_PASSWORD` di `.env` **sebelum*
    Akun harus sudah terdaftar dan emailnya terverifikasi agar dapat masuk ke panel admin.
 
 2. Gunakan menu **Kelas & Pelajaran** untuk mengelola kelas Bahasa Sunda dan Aksara Sunda, lalu pilih unit atau pelajaran yang akan diubah.
-3. Tambahkan blok materi, latihan, soal, kunci jawaban, dan audio dari halaman pengelolaan terkait.
-4. Terbitkan secara berurutan: isi dan terbitkan pelajaran terlebih dahulu, kemudian unit, lalu kelas. Pelajaran perlu memiliki blok materi; latihan perlu memiliki soal sebelum konten dapat diterbitkan.
+3. Tambahkan blok materi, latihan atau kuis, soal, kunci jawaban, dan audio dari halaman pengelolaan terkait. Untuk kuis, atur waktu, nilai kelulusan, dan batas percobaan.
+4. Terbitkan secara berurutan: isi dan terbitkan pelajaran terlebih dahulu, kemudian unit, lalu kelas. Pelajaran perlu memiliki blok materi; aktivitas perlu memiliki soal sebelum pelajar dapat mengerjakannya.
 5. Buka bagian **Pelajar & Progres** untuk melihat aktivitas belajar dan hasil latihan.
 
 ## Konfigurasi Tutor AI
@@ -192,5 +202,3 @@ Tutor membatasi permintaan menjadi 10 kali per jam untuk setiap pengguna dan han
 - Tutor AI bergantung pada materi terbit dan konfigurasi penyedia AI. Jawabannya dapat keliru; pelajar perlu memeriksa rujukan yang disediakan.
 - Fitur kelas guru, penugasan per kelas, transliterasi otomatis Latin ke Aksara Sunda, penilaian pelafalan, dan tutor suara belum tersedia.
 - Sebelum dipakai di sekolah, tentukan kebijakan akun untuk siswa di bawah umur, privasi dan retensi percakapan AI, serta batas biaya layanan AI.
-
-Panduan desain antarmuka tersedia di [`DESIGN.md`](DESIGN.md); ruang lingkup produk dan keputusan yang masih terbuka ada di [`PRD.md`](PRD.md).
