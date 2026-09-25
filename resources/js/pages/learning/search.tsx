@@ -2,8 +2,9 @@ import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
 import { ArrowRight, BookOpen, Search } from "lucide-react";
 import type { Lesson } from "@/types/learning";
+import PaginationControls, { type PaginationMeta } from "@/components/pagination-controls";
 
-export default function SearchPage({ query, lessons }: { query: string; lessons: Lesson[] }) {
+export default function SearchPage({ query, lessons, resultCount, pagination }: { query: string; lessons: Lesson[]; resultCount: number; pagination: PaginationMeta }) {
     return (
         <div className="page-wrap py-8 md:py-10">
             <Head title={t("Cari materi")} />
@@ -21,7 +22,7 @@ export default function SearchPage({ query, lessons }: { query: string; lessons:
                     defaultValue={query}
                     autoFocus
                     placeholder={t("Cari pelajaran, kosakata, atau aksara")}
-                    className="min-h-10 min-w-0 flex-1 bg-transparent text-sm outline-none"
+                    className="min-h-10 min-w-0 flex-1 bg-transparent text-sm outline-none focus-visible:ring-2 focus-visible:ring-[#493ee5]"
                 />
                 <button className="btn-primary" type="submit">
                     {t("Cari")}
@@ -29,7 +30,7 @@ export default function SearchPage({ query, lessons }: { query: string; lessons:
             </form>
             <p className="mt-7 text-sm font-semibold text-muted-foreground">
                 {query
-                    ? `${lessons.length} hasil untuk “${query}”`
+                    ? `${resultCount} hasil untuk “${query}”`
                     : t("Masukkan kata kunci untuk mencari materi yang sudah terbit.")}
             </p>
             <div className="mt-4 grid gap-3 md:grid-cols-2">
@@ -57,6 +58,11 @@ export default function SearchPage({ query, lessons }: { query: string; lessons:
                     </Link>
                 ))}
             </div>
+            {(pagination.previous || pagination.next) && (
+                <div className="stitch-card mt-4 overflow-hidden">
+                    <PaginationControls pagination={pagination} />
+                </div>
+            )}
             {query && lessons.length === 0 && (
                 <div className="stitch-card mt-4 p-7 text-sm text-muted-foreground">
                     {t("Belum ada materi yang cocok. Coba kata kunci lain atau buka")}{" "}

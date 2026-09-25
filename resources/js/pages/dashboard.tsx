@@ -1,15 +1,22 @@
 import { t } from "@/lib/ui-language";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import {
     ArrowRight,
     BookOpen,
+    Bookmark,
+    CaseSensitive,
     CheckCircle2,
     ChevronRight,
+    CircleHelp,
+    Flame,
     MessageSquareText,
     PenLine,
     Play,
     Sparkles,
+    Target,
+    RotateCcw,
 } from "lucide-react";
+import { useState } from "react";
 import type { Auth } from "@/types";
 import { lessonUrl, pathUrl, type LearningPath } from "@/types/learning";
 
@@ -17,11 +24,17 @@ export default function Dashboard({
     paths,
     progress,
     recentLesson,
+    learningGoal,
+    reviewDueCount,
 }: {
     paths: LearningPath[];
     progress: Record<number, string>;
     recentLesson: number | null;
+    learningGoal: { target: number; completedToday: number; streak: number };
+    reviewDueCount: number;
 }) {
+    const [savingGoal, setSavingGoal] = useState(false);
+    const [pathPage, setPathPage] = useState(1);
     const { auth } = usePage<{ auth: Auth }>().props;
     const allLessons = paths.flatMap(
         (path) => path.units?.flatMap((unit) => unit.lessons ?? []) ?? [],
@@ -32,6 +45,18 @@ export default function Dashboard({
         allLessons.find((lesson) => progress[lesson.id] !== "completed") ??
         allLessons[0];
     const firstName = auth.user.name.split(" ")[0];
+    const pathsPerPage = 4;
+    const pageCount = Math.max(1, Math.ceil(paths.length / pathsPerPage));
+    const visiblePaths = paths.slice((pathPage - 1) * pathsPerPage, pathPage * pathsPerPage);
+    const featuredInProgressId = featured && progress[featured.id] === "in_progress" ? featured.id : null;
+    const nextLessonsByPath = paths.map((path) =>
+            (path.units ?? []).flatMap((unit) =>
+                (unit.lessons ?? [])
+                    .filter((lesson) => progress[lesson.id] !== "completed" && lesson.id !== featuredInProgressId)
+                    .map((lesson) => ({ lesson, path, unit })),
+            ),
+    );
+    const nextLessons = nextLessonsByPath.flatMap((lessons) => lessons.slice(0, 2)).slice(0, 4);
     return (
         <div className="page-wrap py-7 md:py-9">
             <Head title={t("Dasbor belajar")} />
@@ -39,7 +64,7 @@ export default function Dashboard({
                 <div>
                     <p className="stitch-kicker">{t("RUANG BELAJAR")}</p>
                     <h1 className="mt-1 text-2xl font-extrabold tracking-tight md:text-[30px]">
-                        {t("Wilujeng sumping,")} {firstName}! <span aria-hidden="true">👋</span>
+                        {t("Wilujeng sumping,")} {firstName}!
                     </h1>
                     <p className="mt-2 text-sm text-muted-foreground">
                         {t("Lanjutkan langkah belajar Bahasa dan Aksara Sunda hari ini.")}
@@ -115,6 +140,13 @@ export default function Dashboard({
                             </p>
                         </div>
                     </section>
+                    <Link href="/ulangan" className="stitch-card mt-4 flex flex-wrap items-center justify-between gap-4 p-4 transition-colors hover:border-[#aaa4ff] hover:bg-[#fcfbff]">
+                        <span className="flex items-center gap-3">
+                            <span className="flex size-10 items-center justify-center rounded-xl bg-[#efedff] text-[#493ee5]"><RotateCcw className="size-5"/></span>
+                            <span><strong className="block text-sm">{t("Ulangan terjadwal")}</strong><small className="mt-1 block text-xs text-muted-foreground">{t("Ulangi kosakata dan aksara agar lebih mudah diingat.")}</small></span>
+                        </span>
+                        <span className="inline-flex items-center gap-2 rounded-full bg-[#efedff] px-3 py-2 text-xs font-bold text-[#493ee5]">{reviewDueCount} {t("perlu diulang")} <ArrowRight className="size-3.5"/></span>
+                    </Link>
                     <section id="kelas-belajar" className="mt-8">
                         <div className="mb-4 flex items-end justify-between gap-3">
                             <div>
@@ -128,7 +160,7 @@ export default function Dashboard({
                             </span>
                         </div>
                         <div className="grid gap-4 lg:grid-cols-2">
-                            {paths.map((path) => {
+                            {visiblePaths.map((path) => {
                                 const lessons =
                                     path.units?.flatMap((unit) => unit.lessons ?? []) ?? [];
                                 const done = lessons.filter(
@@ -205,9 +237,82 @@ export default function Dashboard({
                                 </div>
                             )}
                         </div>
+                        {pageCount > 1 && (
+                            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border bg-card px-4 py-3">
+                                <span className="text-xs text-muted-foreground">
+                                    {t("Menampilkan")} {(pathPage - 1) * pathsPerPage + 1}–{Math.min(pathPage * pathsPerPage, paths.length)} {t("dari")} {paths.length} {t("kelas")}
+                                </span>
+                                <div className="flex gap-2">
+                                    <button type="button" disabled={pathPage <= 1} onClick={() => setPathPage((page) => Math.max(1, page - 1))} className="btn-secondary min-h-9 px-3 text-xs disabled:opacity-40">{t("Sebelumnya")}</button>
+                                    <button type="button" disabled={pathPage >= pageCount} onClick={() => setPathPage((page) => Math.min(pageCount, page + 1))} className="btn-secondary min-h-9 px-3 text-xs disabled:opacity-40">{t("Berikutnya")}</button>
+                                </div>
+                            </div>
+                        )}
+                    </section>
+                    <section className="mt-8">
+                        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+                            <div>
+                                <p className="stitch-kicker">{t("LANGKAH BERIKUTNYA")}</p>
+                                <h2 className="mt-1 text-xl font-extrabold tracking-tight">{t("Pelajaran berikutnya")}</h2>
+                            </div>
+                            <p className="text-xs text-muted-foreground">{t("Buka pelajaran yang belum selesai dari kelasmu.")}</p>
+                        </div>
+                        {nextLessons.length > 0 ? (
+                            <div className="grid gap-3 md:grid-cols-2">
+                                {nextLessons.map(({ lesson, path, unit }, index) => (
+                                    <Link
+                                        key={lesson.id}
+                                        href={lessonUrl(lesson)}
+                                        className="stitch-card group flex min-h-[132px] flex-col justify-between p-4 transition-colors hover:border-[#aaa4ff] hover:bg-[#fcfbff]"
+                                    >
+                                        <div className="flex items-start gap-3">
+                                            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[#efedff] text-xs font-extrabold text-[#493ee5]">
+                                                {String(index + 1).padStart(2, "0")}
+                                            </span>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-[10px] font-extrabold tracking-wide text-[#493ee5]">{t(path.title)}</p>
+                                                <h3 className="mt-1 line-clamp-2 text-sm font-extrabold leading-5">{lesson.title}</h3>
+                                                <p className="mt-1 truncate text-xs text-muted-foreground">{unit.title}</p>
+                                            </div>
+                                        </div>
+                                        <span className="mt-3 flex items-center justify-between border-t pt-2.5 text-xs font-bold text-link">
+                                            {t(progress[lesson.id] === "in_progress" ? "Lanjutkan" : "Mulai belajar")}
+                                            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                                        </span>
+                                    </Link>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="stitch-card flex flex-wrap items-center justify-between gap-3 p-4">
+                                <p className="text-sm text-muted-foreground">{t("Semua pelajaran di kelas yang tersedia sudah selesai.")}</p>
+                                <Link href="/progres" className="inline-flex items-center gap-2 text-sm font-bold text-link">
+                                    {t("Lihat progres saya")} <ArrowRight className="size-4" />
+                                </Link>
+                            </div>
+                        )}
                     </section>
                 </div>
                 <aside className="space-y-4">
+                    <div className="stitch-card p-5">
+                        <div className="flex items-start justify-between gap-3">
+                            <div>
+                                <p className="stitch-kicker">{t("TARGET HARIAN")}</p>
+                                <h3 className="mt-2 text-base font-extrabold">{t("Jaga kebiasaan belajar")}</h3>
+                            </div>
+                            <span className="flex size-10 items-center justify-center rounded-xl bg-[#fff3d8] text-[#a34b05]"><Target className="size-5" /></span>
+                        </div>
+                        <div className="mt-4 flex items-end justify-between gap-3">
+                            <p className="text-sm"><strong>{learningGoal.completedToday}</strong> / {learningGoal.target} {t("aktivitas hari ini")}</p>
+                            <span className="inline-flex items-center gap-1 text-xs font-bold text-[#a34b05]"><Flame className="size-4" /> {learningGoal.streak} {t("hari")}</span>
+                        </div>
+                        <div className="stitch-progress mt-3"><span style={{ width: `${Math.min(100, (learningGoal.completedToday / learningGoal.target) * 100)}%` }} /></div>
+                        <p className="mt-4 text-xs text-muted-foreground">{t("Pilih target aktivitas per hari")}</p>
+                        <div className="mt-2 grid grid-cols-4 gap-2">
+                            {[1, 2, 3, 5].map((goal) => (
+                                <button key={goal} type="button" disabled={savingGoal} aria-pressed={learningGoal.target === goal} onClick={() => { setSavingGoal(true); router.patch("/target-belajar", { daily_goal: goal }, { preserveScroll: true, onFinish: () => setSavingGoal(false) }); }} className={`min-h-9 rounded-lg border text-xs font-bold ${learningGoal.target === goal ? "border-[#493ee5] bg-[#efedff] text-[#493ee5]" : "bg-card text-muted-foreground hover:border-[#aaa4ff]"}`}>{goal}</button>
+                            ))}
+                        </div>
+                    </div>
                     <div className="stitch-card p-5">
                         <p className="stitch-kicker">{t("PELAJARAN TERAKHIR")}</p>
                         {featured ? (
@@ -254,6 +359,15 @@ export default function Dashboard({
                         </div>
                         <PenLine className="size-5 text-[#493ee5]" />
                     </Link>
+                    <div className="stitch-card p-5">
+                        <p className="stitch-kicker">{t("AKSES CEPAT")}</p>
+                        <div className="mt-3 divide-y">
+                            <Link href="/kuis" className="flex min-h-12 items-center gap-3 text-sm font-semibold hover:text-link"><CircleHelp className="size-4 text-link" /> {t("Kuis & evaluasi")} <ArrowRight className="ml-auto size-4" /></Link>
+                            <Link href="/ulasan" className="flex min-h-12 items-center gap-3 text-sm font-semibold hover:text-link"><CheckCircle2 className="size-4 text-link" /> {t("Ulasan jawaban")} <ArrowRight className="ml-auto size-4" /></Link>
+                            <Link href="/materi-tersimpan" className="flex min-h-12 items-center gap-3 text-sm font-semibold hover:text-link"><Bookmark className="size-4 text-link" /> {t("Materi tersimpan")} <ArrowRight className="ml-auto size-4" /></Link>
+                            <Link href="/aksara-sunda/kumpulan" className="flex min-h-12 items-center gap-3 text-sm font-semibold hover:text-link"><CaseSensitive className="size-4 text-link" /> {t("Kumpulan Aksara")} <ArrowRight className="ml-auto size-4" /></Link>
+                        </div>
+                    </div>
                 </aside>
             </div>
         </div>

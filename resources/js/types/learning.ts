@@ -17,6 +17,7 @@ export type Question = {
     type: string;
     prompt: string;
     options: string[] | null;
+    audio_path?: string | null;
     answer?: { value: string };
     explanation?: string;
     position: number;
@@ -25,6 +26,10 @@ export type Exercise = {
     id: number;
     title: string;
     position: number;
+    kind?: "practice" | "quiz";
+    time_limit_minutes?: number | null;
+    pass_percentage?: number;
+    attempt_limit?: number | null;
     questions?: Question[];
     lesson?: Lesson;
 };

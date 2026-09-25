@@ -26,7 +26,7 @@ class DemoAccountsSeederTest extends TestCase
         $this->assertTrue(Hash::check(config('demo.account_password'), $admin->password));
         $this->assertTrue(Hash::check(config('demo.account_password'), $student->password));
         $this->actingAs($admin)->get(route('admin.index'))->assertOk();
-        $this->actingAs($student)->get(route('admin.index'))->assertForbidden();
+        $this->actingAs($student)->get(route('admin.index'))->assertRedirect(route('dashboard'));
     }
 
     public function test_reseeding_does_not_reset_existing_passwords_or_create_duplicates(): void
