@@ -1,14 +1,23 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowLeft, Check, RotateCcw, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpenCheck, Check, Compass, RotateCcw, Target, X } from "lucide-react";
 
 type Result = {
+    id: number;
     prompt: string;
     submitted: string | null;
     answer: string;
     correct: boolean;
     explanation: string;
 };
+
+type Recommendation =
+    | { type: "review"; missed_count: number; lesson_id: number; lesson_title: string; weak_topics: { block_id: number | null; title: string }[]; practice: { id: number; title: string } | null }
+    | { type: "continue"; lesson_id: number; lesson_title: string }
+    | { type: "finish_lesson"; lesson_id: number; lesson_title: string }
+    | { type: "catch_up"; lesson_id: number; lesson_title: string }
+    | { type: "path_complete"; path_title: string }
+    | null;
 
 export default function ResultPage({
     attempt,
@@ -18,6 +27,7 @@ export default function ResultPage({
     passed,
     passPercentage,
     canRetry,
+    recommendation,
 }: {
     attempt: { correct_count: number; total_count: number };
     exercise: { id: number; title: string; lesson_id: number };
@@ -26,6 +36,7 @@ export default function ResultPage({
     passed: boolean | null;
     passPercentage: number;
     canRetry: boolean;
+    recommendation: Recommendation;
 }) {
     const percent = attempt.total_count
         ? Math.round((attempt.correct_count / attempt.total_count) * 100)
@@ -58,6 +69,74 @@ export default function ResultPage({
                     {percent}%
                 </div>
             </div>
+            {isQuiz && recommendation && (
+                <section className="mt-5 rounded-2xl border border-[#ddd8ff] bg-[#f6f4ff] p-5 md:p-6" aria-labelledby="next-study-title">
+                    <div className="flex items-start gap-3">
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#493ee5]">
+                            {recommendation.type === "review" ? <Target className="size-5" /> : recommendation.type === "path_complete" ? <Compass className="size-5" /> : <BookOpenCheck className="size-5" />}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                            <h2 id="next-study-title" className="font-extrabold">
+                                {t(recommendation.type === "review" ? "Topik yang perlu diperkuat" : recommendation.type === "finish_lesson" ? "Selesaikan pelajaran ini" : recommendation.type === "continue" ? "Lanjutkan belajar" : recommendation.type === "catch_up" ? "Ada pelajaran yang terlewat" : "Bagus, kelas ini selesai")}
+                            </h2>
+                            {recommendation.type === "review" && (
+                                <>
+                                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                                        {t("Ada")} <strong className="text-foreground">{recommendation.missed_count}</strong> {t("jawaban yang belum tepat. Perkuat kembali topik ini:")}
+                                    </p>
+                                    <div className="mt-3 flex flex-wrap gap-2">
+                                        {recommendation.weak_topics.map((topic) => (
+                                            <span key={topic.block_id ?? topic.title} className="rounded-full border border-[#ddd8ff] bg-white px-3 py-1.5 text-sm font-semibold text-[#493ee5]">
+                                                {topic.title}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <p className="mt-2 font-bold">{recommendation.lesson_title}</p>
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        <Link href={`/pelajaran/${recommendation.lesson_id}${recommendation.weak_topics[0]?.block_id ? `#block-${recommendation.weak_topics[0].block_id}` : ""}`} className="btn-primary min-h-10 gap-2 px-4 text-xs">
+                                            {t("Baca ulang materi")} <ArrowRight className="size-3.5" />
+                                        </Link>
+                                        {recommendation.practice && (
+                                            <Link href={`/latihan/${recommendation.practice.id}`} className="btn-secondary min-h-10 gap-2 px-4 text-xs">
+                                                {t("Latihan terkait")}: {recommendation.practice.title}
+                                            </Link>
+                                        )}
+                                    </div>
+                                </>
+                            )}
+                            {recommendation.type === "continue" && (
+                                <>
+                                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("Semua jawaban tepat. Pelajaran berikutnya yang belum selesai:")}</p>
+                                    <p className="mt-2 font-bold">{recommendation.lesson_title}</p>
+                                    <Link href={`/pelajaran/${recommendation.lesson_id}`} className="btn-primary mt-4 min-h-10 gap-2 px-4 text-xs">
+                                        {t("Lanjutkan ke pelajaran")} <ArrowRight className="size-3.5" />
+                                    </Link>
+                                </>
+                            )}
+                            {(recommendation.type === "finish_lesson" || recommendation.type === "catch_up") && (
+                                <>
+                                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                                        {t(recommendation.type === "finish_lesson" ? "Kuis selesai. Tandai pelajaran ini selesai agar progres tersimpan:" : "Pelajaran berikutnya sudah dituntaskan. Materi yang masih belum selesai:")}
+                                    </p>
+                                    <p className="mt-2 font-bold">{recommendation.lesson_title}</p>
+                                    <Link href={`/pelajaran/${recommendation.lesson_id}`} className="btn-primary mt-4 min-h-10 gap-2 px-4 text-xs">
+                                        {t(recommendation.type === "finish_lesson" ? "Tuntaskan pelajaran" : "Buka pelajaran")} <ArrowRight className="size-3.5" />
+                                    </Link>
+                                </>
+                            )}
+                            {recommendation.type === "path_complete" && (
+                                <>
+                                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("Semua pelajaran di kelas ini sudah diselesaikan. Pilih kelas lain untuk melanjutkan.")}</p>
+                                    <p className="mt-2 font-bold">{recommendation.path_title}</p>
+                                    <Link href="/dashboard" className="btn-primary mt-4 min-h-10 gap-2 px-4 text-xs">
+                                        {t("Jelajahi kelas")} <ArrowRight className="size-3.5" />
+                                    </Link>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </section>
+            )}
             <h2 className="mt-8 text-xl font-semibold">{t("Tinjauan jawaban")}</h2>
             <div className="mt-4 space-y-3">
                 {results.map((result, i) => (
