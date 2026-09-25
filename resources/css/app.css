@@ -243,6 +243,204 @@
     background: #493ee5;
 }
 
+.landing-hero {
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+.landing-orbit {
+    position: absolute;
+    z-index: 0;
+    inset: 0 0 auto;
+    height: 430px;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+}
+
+.landing-orbit__ring {
+    position: absolute;
+    top: 205px;
+    left: 50%;
+    aspect-ratio: 1;
+    border: 1px solid rgb(88 100 135 / 12%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.landing-orbit__ring--inner {
+    width: min(46vw, 420px);
+}
+
+.landing-orbit__ring--middle {
+    width: min(70vw, 760px);
+}
+
+.landing-orbit__ring--outer {
+    width: min(94vw, 1080px);
+}
+
+.landing-orbit__card {
+    position: absolute;
+    top: 205px;
+    left: 50%;
+    display: grid;
+    width: 56px;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid #e1e4ed;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 14px rgb(40 46 62 / 9%);
+    color: #4255ff;
+    font-size: 25px;
+    line-height: 1;
+    transform: translate(-50%, -50%);
+    animation: landing-orbit-float 7s ease-in-out infinite;
+}
+
+.landing-orbit__card--upper-left {
+    top: 48px;
+    left: 22%;
+    animation-delay: -1.2s;
+}
+
+.landing-orbit__card--upper-right {
+    top: 48px;
+    left: 78%;
+    animation-delay: -3.5s;
+}
+
+.landing-orbit__card--middle-left {
+    left: 4%;
+    animation-delay: -2s;
+}
+
+.landing-orbit__card--middle-right {
+    left: 96%;
+    animation-delay: -4.4s;
+}
+
+.landing-orbit__card--lower-left {
+    top: 350px;
+    left: 19%;
+    animation-delay: -5.1s;
+}
+
+.landing-orbit__card--lower-right {
+    top: 350px;
+    left: 81%;
+    animation-delay: -2.7s;
+}
+
+@keyframes landing-orbit-float {
+    0%,
+    100% {
+        transform: translate(-50%, -50%);
+    }
+
+    50% {
+        transform: translate(-50%, calc(-50% - 4px));
+    }
+}
+
+@media (max-width: 1023px) {
+    .landing-orbit {
+        height: 370px;
+    }
+
+    .landing-orbit__ring {
+        top: 180px;
+    }
+
+    .landing-orbit__ring--inner {
+        width: min(72vw, 300px);
+    }
+
+    .landing-orbit__ring--middle {
+        width: min(94vw, 380px);
+    }
+
+    .landing-orbit__ring--outer {
+        display: none;
+    }
+
+    .landing-orbit__card {
+        top: 4px;
+        width: 42px;
+        font-size: 20px;
+    }
+
+    .landing-orbit__card--upper-left {
+        top: 4px;
+        left: 14%;
+    }
+
+    .landing-orbit__card--upper-right {
+        top: 4px;
+        left: 86%;
+    }
+
+    .landing-orbit__card--middle-left,
+    .landing-orbit__card--middle-right,
+    .landing-orbit__card--lower-left,
+    .landing-orbit__card--lower-right {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .landing-orbit {
+        height: 400px;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+    }
+
+    .landing-orbit__ring {
+        top: 198px;
+        border-color: rgb(88 100 135 / 10%);
+    }
+
+    .landing-orbit__ring--inner {
+        width: min(52vw, 208px);
+    }
+
+    .landing-orbit__ring--middle {
+        width: min(72vw, 282px);
+    }
+
+    .landing-orbit__ring--outer {
+        display: block;
+        width: min(94vw, 360px);
+    }
+
+    .landing-orbit__card--upper-left {
+        left: 14%;
+    }
+
+    .landing-orbit__card--upper-right {
+        left: 86%;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1100px) {
+    .landing-orbit__card--lower-left {
+        left: 14%;
+    }
+
+    .landing-orbit__card--lower-right {
+        left: 86%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .landing-orbit__card {
+        animation: none;
+    }
+}
+
 @media (max-width: 640px) {
     .page-wrap,
     .read-wrap {

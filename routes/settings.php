@@ -16,7 +16,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('settings/security', [SecurityController::class, 'edit'])
+    Route::redirect('settings/security', '/settings/profile?section=security')
         ->middleware(RequirePassword::class)
         ->name('security.edit');
 
@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('throttle:6,1')
         ->name('user-password.update');
 
-    Route::redirect('settings/appearance', '/settings/profile');
+    Route::redirect('settings/appearance', '/settings/profile')->name('appearance.edit');
 });
 
 Route::get('.well-known/passkey-endpoints', function () {

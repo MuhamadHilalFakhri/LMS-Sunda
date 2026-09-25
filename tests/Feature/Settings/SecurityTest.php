@@ -30,13 +30,7 @@ class SecurityTest extends TestCase
         $this->actingAs($user)
             ->withSession(['auth.password_confirmed_at' => time()])
             ->get(route('security.edit'))
-            ->assertInertia(fn (Assert $page) => $page
-                ->component('settings/security')
-                ->where('canManagePasskeys', true)
-                ->where('passkeys', [])
-                ->where('canManageTwoFactor', true)
-                ->where('twoFactorEnabled', false),
-            );
+            ->assertRedirect(url('/settings/profile?section=security'));
     }
 
     public function test_security_page_requires_password_confirmation_when_enabled()
@@ -67,15 +61,7 @@ class SecurityTest extends TestCase
         $this->actingAs($user)
             ->withSession(['auth.password_confirmed_at' => time()])
             ->get(route('security.edit'))
-            ->assertOk()
-            ->assertInertia(fn (Assert $page) => $page
-                ->component('settings/security')
-                ->where('canManagePasskeys', false)
-                ->where('passkeys', [])
-                ->where('canManageTwoFactor', false)
-                ->missing('twoFactorEnabled')
-                ->missing('requiresConfirmation'),
-            );
+            ->assertRedirect(url('/settings/profile?section=security'));
     }
 
     public function test_password_can_be_updated()

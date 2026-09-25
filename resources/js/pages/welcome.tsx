@@ -27,6 +27,28 @@ import type { Auth } from "@/types";
 
 type FeatureKind = "language" | "script" | "practice" | "tutor";
 const practiceAnswer = ["ᮘ", "ᮞ"];
+const sectionLinks = [
+    { href: "#kelas", label: "Kelas belajar" },
+    { href: "#aksara", label: "Aksara Sunda" },
+    { href: "#tutor", label: "Tutor AI" },
+    { href: "#cara-belajar", label: "Cara belajar" },
+];
+
+function HeroOrbitDecoration() {
+    return (
+        <div className="landing-orbit" aria-hidden="true">
+            <span className="landing-orbit__ring landing-orbit__ring--inner" />
+            <span className="landing-orbit__ring landing-orbit__ring--middle" />
+            <span className="landing-orbit__ring landing-orbit__ring--outer" />
+            <span lang="su" className="landing-orbit__card landing-orbit__card--upper-left sunda-script">ᮊ</span>
+            <span lang="su" className="landing-orbit__card landing-orbit__card--upper-right sunda-script">ᮌ</span>
+            <span lang="su" className="landing-orbit__card landing-orbit__card--middle-left sunda-script">ᮘ</span>
+            <span lang="su" className="landing-orbit__card landing-orbit__card--middle-right sunda-script">ᮞ</span>
+            <span lang="su" className="landing-orbit__card landing-orbit__card--lower-left sunda-script">ᮠ</span>
+            <span lang="su" className="landing-orbit__card landing-orbit__card--lower-right sunda-script">ᮃ</span>
+        </div>
+    );
+}
 
 function useSundaneseSpeech() {
     const [speakingPhrase, setSpeakingPhrase] = useState<string | null>(null);
@@ -336,14 +358,13 @@ export default function Welcome() {
     const featurePanelRef = useRef<HTMLDivElement>(null);
     const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
     const [activeFeature, setActiveFeature] = useState<FeatureKind>("language");
+    const [activeSection, setActiveSection] = useState(() => {
+        if (typeof window === "undefined") return "";
+        const currentHash = window.location.hash;
+        return sectionLinks.find(({ href }) => href === currentHash)?.href.slice(1) ?? "";
+    });
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { playPhrase, speakingPhrase, speechError, voices, selectedVoiceURI, setSelectedVoiceURI } = useSundaneseSpeech();
-    const sectionLinks = [
-        { href: "#kelas", label: "Kelas belajar" },
-        { href: "#aksara", label: "Aksara Sunda" },
-        { href: "#tutor", label: "Tutor AI" },
-        { href: "#cara-belajar", label: "Cara belajar" },
-    ];
     const destination = auth.user
         ? auth.user.role === "admin"
             ? "/admin"
@@ -357,6 +378,7 @@ export default function Welcome() {
 
         event.preventDefault();
         setMobileMenuOpen(false);
+        setActiveSection(sectionId);
         if (window.location.hash !== `#${sectionId}`) {
             window.history.replaceState(window.history.state, "", `#${sectionId}`);
         }
@@ -369,6 +391,29 @@ export default function Welcome() {
             });
         });
     };
+
+    useEffect(() => {
+        const sections = sectionLinks
+            .map(({ href }) => document.getElementById(href.slice(1)))
+            .filter((section): section is HTMLElement => section instanceof HTMLElement);
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const activeEntry = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) =>
+                        Math.abs(a.boundingClientRect.top - window.innerHeight * 0.35)
+                        - Math.abs(b.boundingClientRect.top - window.innerHeight * 0.35),
+                    )[0];
+
+                if (activeEntry) setActiveSection(activeEntry.target.id);
+            },
+            { rootMargin: "-20% 0px -65% 0px", threshold: 0 },
+        );
+
+        sections.forEach((section) => observer.observe(section));
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         if (!mobileMenuOpen) return;
@@ -443,7 +488,13 @@ export default function Welcome() {
 
                     <nav className="hidden items-center gap-7 text-sm font-medium text-[#586380] lg:flex lg:justify-self-center" aria-label={t("Navigasi utama")}>
                         {sectionLinks.map(({ href, label }) => (
-                            <a key={href} className="rounded-sm hover:text-[#4255ff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4255ff]" href={href} onClick={handleSectionNavigation}>
+                            <a
+                                key={href}
+                                aria-current={activeSection === href.slice(1) ? "location" : undefined}
+                                className={`rounded-sm border-b-2 pb-1 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4255ff] ${activeSection === href.slice(1) ? "border-[#4255ff] text-[#4255ff]" : "border-transparent hover:border-[#aeb4ff] hover:text-[#4255ff]"}`}
+                                href={href}
+                                onClick={handleSectionNavigation}
+                            >
                                 {t(label)}
                             </a>
                         ))}
@@ -480,7 +531,13 @@ export default function Welcome() {
                 <nav id="mobile-navigation" className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-[#d9dde8] bg-white px-4 py-3 lg:hidden`} aria-label={t("Navigasi utama")}>
                     <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-1">
                         {sectionLinks.map(({ href, label }) => (
-                            <a key={href} className="rounded-md px-3 py-3 text-sm font-medium text-[#586380] hover:bg-[#f6f7fb] hover:text-[#4255ff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff]" href={href} onClick={handleSectionNavigation}>
+                            <a
+                                key={href}
+                                aria-current={activeSection === href.slice(1) ? "location" : undefined}
+                                className={`rounded-md px-3 py-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff] ${activeSection === href.slice(1) ? "bg-[#edefff] font-semibold text-[#4255ff]" : "font-medium text-[#586380] hover:bg-[#f6f7fb] hover:text-[#4255ff]"}`}
+                                href={href}
+                                onClick={handleSectionNavigation}
+                            >
                                 {t(label)}
                             </a>
                         ))}
@@ -496,7 +553,9 @@ export default function Welcome() {
             </header>
 
             <main>
-                <section className="mx-auto w-[min(100%-32px,1200px)] pb-16 pt-14 text-center md:pb-20 md:pt-20">
+                <section className="landing-hero relative isolate pb-16 pt-14 text-center md:pb-20 md:pt-20">
+                    <HeroOrbitDecoration />
+                    <div className="relative z-10">
                     <p data-hero="eyebrow" className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#d9dde8] bg-white px-3 py-1.5 text-xs font-semibold text-[#586380]">
                         <FontAwesomeIcon icon={faGraduationCap} className="size-4 text-[#4255ff]" />
                         {t("Ruang belajar Bahasa dan Aksara Sunda")}
@@ -532,6 +591,7 @@ export default function Welcome() {
                         <div className="flex shrink-0 items-center">
                             <a href={featureDetails[activeFeature].href} onClick={handleSectionNavigation} className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-sm font-semibold text-[#4255ff] hover:bg-[#f6f7fb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff]">{t("Lihat detail")} <FontAwesomeIcon icon={faArrowRightLong} /></a>
                         </div>
+                    </div>
                     </div>
                 </section>
 

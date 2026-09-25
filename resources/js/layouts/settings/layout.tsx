@@ -1,73 +1,44 @@
-import { Link, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import type { PropsWithChildren } from "react";
-import { useCurrentUrl } from "@/hooks/use-current-url";
-import { cn, toUrl } from "@/lib/utils";
 import AdminLayout from "@/layouts/admin-layout";
 import LearningLayout from "@/layouts/learning-layout";
-import { edit } from "@/routes/profile";
-import { edit as editSecurity } from "@/routes/security";
-import type { Auth, NavItem } from "@/types";
+import type { Auth } from "@/types";
 import { useUiLanguage } from "@/lib/ui-language";
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: "Profil",
-        href: edit(),
-        icon: null,
-    },
-    {
-        title: "Keamanan",
-        href: editSecurity(),
-        icon: null,
-    },
-];
-
 export default function SettingsLayout({ children }: PropsWithChildren) {
-    const { isCurrentOrParentUrl } = useCurrentUrl();
     const { auth } = usePage<{ auth: Auth }>().props;
     const { t } = useUiLanguage();
+    const isAdmin = auth.user.role === "admin";
 
     const content = (
-        <div className="page-wrap py-7 md:py-9">
-            <div className="mb-6 text-xs font-semibold text-muted-foreground">
-                {t("Beranda")} / <span className="text-foreground">{t("Pengaturan")}</span>
-            </div>
-            <div className="rounded-[28px] bg-[#eeeaff] p-7 text-[#1b1b24] md:p-9">
-                <p className="stitch-kicker">{t("AKUN SAWALA")}</p>
-                <h1 className="mt-2 text-3xl font-extrabold tracking-tight">{t("Profil & pengaturan")}</h1>
-                <p className="mt-2 text-sm text-muted-foreground">
-                    {t("Atur profil, bahasa tampilan, dan keamanan akun Anda.")}
-                </p>
-            </div>
-            <div className="mt-6 grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
-                <aside className="stitch-card h-fit p-4">
-                    <nav className="flex flex-col gap-1" aria-label={t("Pengaturan")}>
-                        {sidebarNavItems.map((item, index) => (
-                            <Link
-                                key={`${toUrl(item.href)}-${index}`}
-                                href={item.href}
-                                className={cn(
-                                    "flex min-h-11 items-center rounded-xl px-3 text-sm font-bold",
-                                    {
-                                        "bg-[#493ee5] text-white": isCurrentOrParentUrl(item.href),
-                                    },
-                                )}
-                            >
-                                {t(item.title)}
-                            </Link>
-                        ))}
-                    </nav>
-                </aside>
+        <main className="mx-auto w-full max-w-6xl px-4 py-6 md:px-6 md:py-8">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
                 <div className="min-w-0">
-                    <section className="max-w-3xl space-y-6">{children}</section>
+                    <p className="stitch-kicker">{t("AKUN SAWALA")}</p>
+                    <h1 className="mt-1 text-2xl font-extrabold tracking-tight md:text-[30px]">
+                        {t("Profil & pengaturan")}
+                    </h1>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                        {t("Atur profil, bahasa tampilan, dan keamanan akun Anda.")}
+                    </p>
+                </div>
+                <div className="flex min-w-0 items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#efedff] text-lg font-extrabold text-[#493ee5]">
+                        {auth.user.name.charAt(0).toUpperCase()}
+                    </span>
+                    <span className="min-w-0 leading-tight">
+                        <strong className="block max-w-56 truncate text-sm font-extrabold">
+                            {auth.user.name}
+                        </strong>
+                        <span className="mt-1 block max-w-56 truncate text-xs text-muted-foreground">
+                            {auth.user.email} · {t(isAdmin ? "Admin" : "Pelajar")}
+                        </span>
+                    </span>
                 </div>
             </div>
-        </div>
+            <div className="min-w-0">{children}</div>
+        </main>
     );
 
-    return auth.user.role === "admin" ? (
-        <AdminLayout>{content}</AdminLayout>
-    ) : (
-        <LearningLayout>{content}</LearningLayout>
-    );
+    return isAdmin ? <AdminLayout>{content}</AdminLayout> : <LearningLayout>{content}</LearningLayout>;
 }
