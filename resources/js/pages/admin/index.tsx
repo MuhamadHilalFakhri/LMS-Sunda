@@ -92,7 +92,7 @@ type AdminExerciseItem = Exercise & { lesson_id: number; lessonTitle: string; pa
 type Field = {
     name: string;
     label: string;
-    type?: "textarea" | "select" | "number" | "file";
+    type?: "textarea" | "select" | "number" | "file" | "url";
     options?: { value: string; label: string }[];
     required?: boolean;
     hint?: string;
@@ -495,7 +495,7 @@ function FormModal({ config, close }: { config: FormConfig | null; close: () => 
                                     <Input
                                         id={`edit-${field.name}`}
                                         className={`h-11 bg-card ${config.questionForm && textValue(values.type) === "script" && field.name === "answer" ? "sunda-script text-xl" : ""}`}
-                                        type={field.type === "file" ? "file" : field.type === "number" ? "number" : "text"}
+                                        type={field.type === "file" ? "file" : field.type === "number" ? "number" : field.type === "url" ? "url" : "text"}
                                         accept={field.type === "file" ? ".mp3,.wav,.ogg,.m4a,.webm" : undefined}
                                         min={field.type === "number" ? 0 : undefined}
                                         placeholder={field.placeholder}
@@ -1562,11 +1562,18 @@ export default function AdminPage({
             description: `${t("Pelajaran pada unit")} ${unit.title}.`,
             url: lesson ? `/admin/lessons/${lesson.id}` : "/admin/lessons",
             method: lesson ? "put" : "post",
-            fields: [titleField, { name: "summary", label: "Ringkasan", type: "textarea" }, positionField, ...(lesson ? [statusField] : [])],
+            fields: [
+                titleField,
+                { name: "summary", label: "Ringkasan", type: "textarea" },
+                { name: "youtube_url", label: "Tautan video YouTube (opsional)", type: "url", placeholder: "https://www.youtube.com/watch?v=...", hint: "Video akan tampil di halaman materi. Tempel tautan youtube.com atau youtu.be." },
+                positionField,
+                ...(lesson ? [statusField] : []),
+            ],
             values: lesson
                 ? {
                       title: lesson.title,
                       summary: lesson.summary ?? "",
+                      youtube_url: lesson.youtube_url ?? "",
                       position: lesson.position,
                       status: lesson.status,
                   }

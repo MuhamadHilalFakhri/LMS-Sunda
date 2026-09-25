@@ -6,6 +6,7 @@ use App\Models\Exercise;
 use App\Models\LearningPath;
 use App\Models\Lesson;
 use App\Models\LessonBlock;
+use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -78,54 +79,113 @@ class LearningController extends Controller
         } else {
             $path->setRelation('units', collect());
         }
+        $lessonIds = $path->units->flatMap(fn (Unit $unit) => $unit->lessons->pluck('id'));
 
         return Inertia::render('learning/path', [
             'path' => $path,
-            'progress' => DB::table('lesson_progress')->where('user_id', $request->user()->id)->pluck('status', 'lesson_id'),
+            'progress' => $lessonIds->isEmpty()
+                ? collect()
+                : DB::table('lesson_progress')->where('user_id', $request->user()->id)->whereIn('lesson_id', $lessonIds)->pluck('status', 'lesson_id'),
         ]);
     }
 
-    public function lesson(Request $request, Lesson $lesson): Response
+    public function module(Request $request, Unit $unit): Response
     {
-        $lesson->load('unit.path', 'blocks', 'exercises');
-        abort_unless($lesson->status === 'published' && $lesson->unit->status === 'published' && $lesson->unit->path->status === 'published', 404);
-        DB::table('lesson_progress')->insertOrIgnore([
-            'user_id' => $request->user()->id, 'lesson_id' => $lesson->id,
-            'status' => 'in_progress', 'created_at' => now(), 'updated_at' => now(),
+        $unit->load([
+            'path',
+            'lessons' => fn ($query) => $query->where('status', 'published')->orderBy('position')->orderBy('id'),
         ]);
-        DB::table('lesson_progress')->where('user_id', $request->user()->id)->where('lesson_id', $lesson->id)->update(['updated_at' => now()]);
+        abort_unless($unit->status === 'published' && $unit->path->status === 'published', 404);
 
-        $reviewableBlocks = $lesson->blocks->filter(fn (LessonBlock $block) =>
-            in_array($block->type, ['vocabulary', 'script'], true)
-            && (filled($block->latin) || filled($block->sundanese) || filled($block->body))
-            && (filled($block->translation) || filled($block->latin) || filled($block->sundanese))
-        );
-        if ($reviewableBlocks->isNotEmpty()) {
-            $createdAt = now();
-            DB::table('review_cards')->insertOrIgnore($reviewableBlocks->map(fn (LessonBlock $block) => [
-                'user_id' => $request->user()->id,
-                'lesson_block_id' => $block->id,
-                'due_at' => $createdAt,
-                'created_at' => $createdAt,
-                'updated_at' => $createdAt,
-            ])->all());
+        $lessons = $unit->lessons;
+        $lessonIds = $lessons->pluck('id');
+        $userId = $request->user()->id;
+        $progress = $lessonIds->isEmpty()
+            ? collect()
+            : DB::table('lesson_progress')->where('user_id', $userId)->whereIn('lesson_id', $lessonIds)->pluck('status', 'lesson_id');
+
+        $requestedLessonId = $request->query('lesson');
+        if ($requestedLessonId !== null) {
+            abort_unless(is_scalar($requestedLessonId) && ctype_digit((string) $requestedLessonId), 404);
+            $lesson = $lessons->firstWhere('id', (int) $requestedLessonId);
+            abort_unless($lesson !== null, 404);
+        } elseif ($lessons->isEmpty()) {
+            $lesson = null;
+        } else {
+            $recentInProgressId = DB::table('lesson_progress')->where('user_id', $userId)
+                ->whereIn('lesson_id', $lessonIds)->where('status', '!=', 'completed')
+                ->orderByDesc('updated_at')->value('lesson_id');
+            $lesson = $lessons->firstWhere('id', (int) $recentInProgressId)
+                ?? $lessons->first(fn (Lesson $item) => $progress->get($item->id) !== 'completed')
+                ?? $lessons->last();
         }
 
-        $savedBlockIds = DB::table('saved_materials')->where('user_id', $request->user()->id)
-            ->whereIn('lesson_block_id', $lesson->blocks->pluck('id'))->pluck('lesson_block_id');
+        $savedBlockIds = collect();
+        if ($lesson) {
+            $lesson->load('blocks', 'exercises');
+            DB::table('lesson_progress')->insertOrIgnore([
+                'user_id' => $userId, 'lesson_id' => $lesson->id,
+                'status' => 'in_progress', 'created_at' => now(), 'updated_at' => now(),
+            ]);
+            DB::table('lesson_progress')->where('user_id', $userId)->where('lesson_id', $lesson->id)->update(['updated_at' => now()]);
 
-        return Inertia::render('learning/lesson', ['lesson' => $lesson, 'savedBlockIds' => $savedBlockIds]);
+            $reviewableBlocks = $lesson->blocks->filter(fn (LessonBlock $block) =>
+                in_array($block->type, ['vocabulary', 'script'], true)
+                && (filled($block->latin) || filled($block->sundanese) || filled($block->body))
+                && (filled($block->translation) || filled($block->latin) || filled($block->sundanese))
+            );
+            if ($reviewableBlocks->isNotEmpty()) {
+                $createdAt = now();
+                DB::table('review_cards')->insertOrIgnore($reviewableBlocks->map(fn (LessonBlock $block) => [
+                    'user_id' => $userId,
+                    'lesson_block_id' => $block->id,
+                    'due_at' => $createdAt,
+                    'created_at' => $createdAt,
+                    'updated_at' => $createdAt,
+                ])->all());
+            }
+
+            $savedBlockIds = DB::table('saved_materials')->where('user_id', $userId)
+                ->whereIn('lesson_block_id', $lesson->blocks->pluck('id'))->pluck('lesson_block_id');
+        }
+
+        return Inertia::render('learning/module', [
+            'path' => $unit->path->only(['id', 'slug', 'title']),
+            'unit' => $unit->only(['id', 'title', 'description']),
+            'lessons' => $lessons->map(fn (Lesson $item) => $item->only(['id', 'title', 'summary', 'position']))->values(),
+            'lesson' => $lesson ? [
+                ...$lesson->only(['id', 'title', 'summary', 'youtube_url', 'status', 'position']),
+                'unit' => [
+                    'id' => $unit->id,
+                    'title' => $unit->title,
+                    'path' => $unit->path->only(['id', 'slug', 'title']),
+                ],
+                'blocks' => $lesson->blocks->values()->toArray(),
+                'exercises' => $lesson->exercises->map(fn (Exercise $exercise) => $exercise->only(['id', 'title', 'position', 'kind']))->values(),
+            ] : null,
+            'progress' => $progress,
+            'savedBlockIds' => $savedBlockIds,
+        ]);
+    }
+
+    public function lesson(Lesson $lesson): RedirectResponse
+    {
+        $lesson->load('unit.path');
+        abort_unless($lesson->status === 'published' && $lesson->unit->status === 'published' && $lesson->unit->path->status === 'published', 404);
+
+        return redirect()->route('modules.show', ['unit' => $lesson->unit_id, 'lesson' => $lesson->id]);
     }
 
     public function complete(Request $request, Lesson $lesson): RedirectResponse
     {
+        $lesson->load('unit.path');
         abort_unless($lesson->status === 'published' && $lesson->unit->status === 'published' && $lesson->unit->path->status === 'published', 404);
         DB::table('lesson_progress')->updateOrInsert(
             ['user_id' => $request->user()->id, 'lesson_id' => $lesson->id],
             ['status' => 'completed', 'completed_at' => now(), 'updated_at' => now()]
         );
 
-        return redirect()->route('paths.by-slug', ['path' => $lesson->unit->path->slug]);
+        return redirect()->route('modules.show', ['unit' => $lesson->unit_id, 'lesson' => $lesson->id]);
     }
 
     public function exercise(Exercise $exercise): Response|RedirectResponse

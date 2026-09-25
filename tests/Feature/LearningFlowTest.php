@@ -45,15 +45,88 @@ class LearningFlowTest extends TestCase
         $exercise = Exercise::create(['lesson_id' => $lesson->id, 'title' => 'Latihan aksara']);
         $question = Question::create(['exercise_id' => $exercise->id, 'type' => 'script', 'prompt' => 'Pilih aksara ka', 'answer' => ['value' => 'ᮊ'], 'explanation' => 'Ini aksara ka.']);
 
-        $this->actingAs($student)->get(route('lessons.show', $lesson))->assertOk();
+        $this->actingAs($student)->get(route('lessons.show', $lesson))
+            ->assertRedirect(route('modules.show', ['unit' => $unit->id, 'lesson' => $lesson->id]));
+        $this->actingAs($student)->get(route('modules.show', $unit))
+            ->assertOk()
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page
+                ->component('learning/module')
+                ->where('lesson.id', $lesson->id)
+                ->has('lessons', 1),
+            );
         $this->assertDatabaseHas('lesson_progress', ['user_id' => $student->id, 'lesson_id' => $lesson->id, 'status' => 'in_progress']);
         $this->actingAs($student)->get(route('exercises.show', $exercise))->assertOk()->assertDontSee('Ini aksara ka.');
         $this->actingAs($student)->post(route('exercises.submit', $exercise), ['answers' => [$question->id => 'ᮊ'], 'duration_seconds' => 10])->assertRedirect();
         $this->actingAs($student)->post(route('exercises.submit', $exercise), ['answers' => [$question->id => 'ᮘ']])->assertRedirect();
         $this->assertEquals(2, DB::table('exercise_attempts')->where('user_id', $student->id)->count());
         $this->assertEquals(1, DB::table('exercise_attempts')->where('user_id', $student->id)->max('correct_count'));
-        $this->actingAs($student)->post(route('lessons.complete', $lesson))->assertRedirect(route('paths.by-slug', ['path' => $path->slug]));
+        $this->actingAs($student)->post(route('lessons.complete', $lesson))
+            ->assertRedirect(route('modules.show', ['unit' => $unit->id, 'lesson' => $lesson->id]));
         $this->assertDatabaseHas('lesson_progress', ['user_id' => $student->id, 'lesson_id' => $lesson->id, 'status' => 'completed']);
+    }
+
+    public function test_module_workspace_only_contains_its_published_lessons_and_resumes_recent_work(): void
+    {
+        $student = User::factory()->create(['role' => 'pelajar']);
+        $path = LearningPath::create(['slug' => 'bahasa-sunda', 'title' => 'Bahasa Sunda', 'status' => 'published']);
+        $unit = Unit::create(['learning_path_id' => $path->id, 'title' => 'Sapaan', 'status' => 'published']);
+        $first = Lesson::create(['unit_id' => $unit->id, 'title' => 'Salam', 'status' => 'published', 'position' => 1]);
+        $second = Lesson::create(['unit_id' => $unit->id, 'title' => 'Perkenalan', 'status' => 'published', 'position' => 2]);
+        $third = Lesson::create(['unit_id' => $unit->id, 'title' => 'Pamit', 'status' => 'published', 'position' => 3]);
+        Lesson::create(['unit_id' => $unit->id, 'title' => 'Draf tersembunyi', 'status' => 'draft', 'position' => 4]);
+        $otherUnit = Unit::create(['learning_path_id' => $path->id, 'title' => 'Kegiatan', 'status' => 'published']);
+        $foreignLesson = Lesson::create(['unit_id' => $otherUnit->id, 'title' => 'Materi lain', 'status' => 'published']);
+        DB::table('lesson_progress')->insert([
+            ['user_id' => $student->id, 'lesson_id' => $first->id, 'status' => 'completed', 'completed_at' => now(), 'created_at' => now(), 'updated_at' => now()->subMinutes(5)],
+            ['user_id' => $student->id, 'lesson_id' => $second->id, 'status' => 'in_progress', 'completed_at' => null, 'created_at' => now(), 'updated_at' => now()->subMinutes(2)],
+            ['user_id' => $student->id, 'lesson_id' => $third->id, 'status' => 'in_progress', 'completed_at' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['user_id' => $student->id, 'lesson_id' => $foreignLesson->id, 'status' => 'in_progress', 'completed_at' => null, 'created_at' => now(), 'updated_at' => now()->addMinute()],
+        ]);
+
+        $this->actingAs($student)->get(route('modules.show', $unit))
+            ->assertOk()
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page
+                ->component('learning/module')
+                ->where('lesson.id', $third->id)
+                ->has('lessons', 3)
+                ->where('lessons.0.id', $first->id)
+                ->where('lessons.1.id', $second->id)
+                ->where('lessons.2.id', $third->id),
+            );
+        $this->actingAs($student)->get(route('modules.show', ['unit' => $unit->id, 'lesson' => $first->id]))
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page->where('lesson.id', $first->id));
+        $this->actingAs($student)->get(route('modules.show', ['unit' => $unit->id, 'lesson' => $foreignLesson->id]))->assertNotFound();
+    }
+
+    public function test_module_workspace_uses_first_incomplete_then_last_completed_and_supports_empty_units(): void
+    {
+        $student = User::factory()->create(['role' => 'pelajar']);
+        $path = LearningPath::create(['slug' => 'bahasa-sunda', 'title' => 'Bahasa Sunda', 'status' => 'published']);
+        $unit = Unit::create(['learning_path_id' => $path->id, 'title' => 'Ungkapan', 'status' => 'published']);
+        $first = Lesson::create(['unit_id' => $unit->id, 'title' => 'Wilujeng enjing', 'status' => 'published', 'position' => 1]);
+        $last = Lesson::create(['unit_id' => $unit->id, 'title' => 'Hatur nuhun', 'status' => 'published', 'position' => 2]);
+        DB::table('lesson_progress')->insert([
+            'user_id' => $student->id, 'lesson_id' => $first->id, 'status' => 'completed', 'completed_at' => now(), 'created_at' => now(), 'updated_at' => now(),
+        ]);
+
+        $this->actingAs($student)->get(route('modules.show', $unit))
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page->where('lesson.id', $last->id));
+
+        DB::table('lesson_progress')->update(['status' => 'completed', 'completed_at' => now()]);
+        $this->actingAs($student)->get(route('modules.show', $unit))
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page->where('lesson.id', $last->id));
+
+        $emptyUnit = Unit::create(['learning_path_id' => $path->id, 'title' => 'Modul kosong', 'status' => 'published']);
+        Lesson::create(['unit_id' => $emptyUnit->id, 'title' => 'Belum terbit', 'status' => 'draft']);
+        $this->actingAs($student)->get(route('modules.show', $emptyUnit))
+            ->assertOk()
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page
+                ->component('learning/module')
+                ->where('lesson', null)
+                ->has('lessons', 0),
+            );
+        $draftUnit = Unit::create(['learning_path_id' => $path->id, 'title' => 'Modul draf', 'status' => 'draft']);
+        $this->actingAs($student)->get(route('modules.show', $draftUnit))->assertNotFound();
     }
 
     public function test_admin_cannot_publish_an_empty_lesson(): void

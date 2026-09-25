@@ -37,6 +37,7 @@ export type Lesson = {
     id: number;
     title: string;
     summary: string | null;
+    youtube_url?: string | null;
     status: string;
     position: number;
     blocks?: Block[];
@@ -65,3 +66,7 @@ export const pathUrl = (path: LearningPath | number) =>
     typeof path === 'number' ? `/kelas/${path}` : `/belajar/${path.slug}`;
 export const lessonUrl = (lesson: Lesson | number) =>
     `/pelajaran/${typeof lesson === 'number' ? lesson : lesson.id}`;
+export const moduleUrl = (unit: Unit | number, lessonId?: number) => {
+    const id = typeof unit === 'number' ? unit : unit.id;
+    return `/modul/${id}${lessonId ? `?lesson=${lessonId}` : ""}`;
+};

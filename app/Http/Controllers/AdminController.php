@@ -435,7 +435,14 @@ class AdminController extends Controller
     public function storeLesson(Request $request): RedirectResponse
     {
         $this->authorizeAdmin($request);
-        Lesson::create($request->validate(['unit_id' => 'required|exists:units,id', 'title' => 'required|string|max:160', 'summary' => 'nullable|string|max:1000', 'position' => 'nullable|integer|min:0']));
+        Lesson::create($request->validate([
+            'unit_id' => 'required|exists:units,id', 'title' => 'required|string|max:160',
+            'summary' => 'nullable|string|max:1000',
+            'youtube_url' => ['nullable', 'url:http,https', 'regex:/^https?:\/\/(?:www\.)?(?:youtube\.com|youtu\.be)\//i', 'max:255'],
+            'position' => 'nullable|integer|min:0',
+        ], [
+            'youtube_url.regex' => 'Gunakan tautan video youtube.com atau youtu.be yang valid.',
+        ]));
 
         return back();
     }
@@ -443,7 +450,13 @@ class AdminController extends Controller
     public function updateLesson(Request $request, Lesson $lesson): RedirectResponse
     {
         $this->authorizeAdmin($request);
-        $data = $request->validate(['title' => 'required|string|max:160', 'summary' => 'nullable|string|max:1000', 'position' => 'nullable|integer|min:0', 'status' => Rule::in(['draft', 'review', 'published', 'archived'])]);
+        $data = $request->validate([
+            'title' => 'required|string|max:160', 'summary' => 'nullable|string|max:1000',
+            'youtube_url' => ['nullable', 'url:http,https', 'regex:/^https?:\/\/(?:www\.)?(?:youtube\.com|youtu\.be)\//i', 'max:255'],
+            'position' => 'nullable|integer|min:0', 'status' => Rule::in(['draft', 'review', 'published', 'archived']),
+        ], [
+            'youtube_url.regex' => 'Gunakan tautan video youtube.com atau youtu.be yang valid.',
+        ]);
         if (($data['status'] ?? null) === 'published') {
             if (! $lesson->blocks()->where(function ($query) {
                 $query->whereNotNull('body')->orWhereNotNull('latin')->orWhereNotNull('sundanese');

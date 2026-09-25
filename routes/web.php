@@ -14,6 +14,7 @@ Route::middleware(['auth', 'verified', 'role:pelajar'])->group(function () {
     Route::get('kelas/{path}', [LearningController::class, 'path'])->name('paths.show');
     Route::get('jalur/{path}', fn (string $path) => redirect()->route('paths.show', ['path' => $path], 301));
     Route::get('belajar/{path:slug}', [LearningController::class, 'path'])->name('paths.by-slug');
+    Route::get('modul/{unit}', [LearningController::class, 'module'])->name('modules.show');
     Route::get('pelajaran/{lesson}', [LearningController::class, 'lesson'])->name('lessons.show');
     Route::post('pelajaran/{lesson}/selesai', [LearningController::class, 'complete'])->name('lessons.complete');
     Route::get('latihan/{exercise}', [LearningController::class, 'exercise'])->name('exercises.show');
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'verified', 'role:pelajar'])->group(function () {
     Route::get('cari', [LearningController::class, 'search'])->name('learning.search');
     Route::get('tutor', [TutorController::class, 'index'])->name('tutor');
     Route::post('tutor', [TutorController::class, 'ask'])->middleware('throttle:10,60')->name('tutor.ask');
+    Route::post('tutor/inline', [TutorController::class, 'ask'])->middleware('throttle:10,60')->name('tutor.ask-inline');
     Route::delete('tutor', [TutorController::class, 'clear'])->name('tutor.clear');
     Route::get('umpan-balik', [FeedbackController::class, 'index'])->name('feedback.index');
     Route::post('umpan-balik', [FeedbackController::class, 'store'])->middleware('throttle:5,10')->name('feedback.store');

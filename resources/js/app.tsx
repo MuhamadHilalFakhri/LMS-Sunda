@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import AuthLayout from "@/layouts/auth-layout";
 import SettingsLayout from "@/layouts/settings/layout";
 import LearningLayout from "@/layouts/learning-layout";
+import ModuleLayout from "@/layouts/module-layout";
 import AdminLayout from "@/layouts/admin-layout";
 
 const appName = import.meta.env.VITE_APP_NAME || "Sawala";
@@ -14,6 +15,8 @@ void createInertiaApp({
         switch (true) {
             case name === "welcome":
                 return null;
+            case name === "learning/module":
+                return ModuleLayout;
             case name === "dashboard" || name.startsWith("learning/"):
                 return LearningLayout;
             case name.startsWith("admin/"):

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lesson extends Model
 {
-    protected $fillable = ['unit_id', 'title', 'summary', 'status', 'position'];
+    protected $fillable = ['unit_id', 'title', 'summary', 'youtube_url', 'status', 'position'];
 
     /** @return BelongsTo<Unit, $this> */
     public function unit(): BelongsTo
