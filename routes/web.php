@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
 
-Route::middleware(['auth', 'verified', 'role:pelajar'])->group(function () {
+Route::middleware(['auth', 'active', 'verified', 'role:pelajar'])->group(function () {
     Route::get('dashboard', [LearningController::class, 'home'])->name('dashboard');
     Route::patch('target-belajar', [LearningController::class, 'updateGoal'])->name('learning.goal.update');
     Route::get('kelas/{path}', [LearningController::class, 'path'])->name('paths.show');
@@ -30,6 +30,8 @@ Route::middleware(['auth', 'verified', 'role:pelajar'])->group(function () {
     Route::get('materi-tersimpan', [LearningController::class, 'savedMaterials'])->name('saved-materials.index');
     Route::post('materi-tersimpan/{block}', [LearningController::class, 'saveMaterial'])->name('saved-materials.store');
     Route::delete('materi-tersimpan/{block}', [LearningController::class, 'unsaveMaterial'])->name('saved-materials.destroy');
+    Route::post('modul-tersimpan/{unit}', [LearningController::class, 'saveModule'])->name('saved-modules.store');
+    Route::delete('modul-tersimpan/{unit}', [LearningController::class, 'unsaveModule'])->name('saved-modules.destroy');
     Route::inertia('aksara-sunda/kumpulan', 'learning/characters')->name('characters.index');
     Route::get('latihan-aksara', [LearningController::class, 'scriptExercises'])->name('script.exercises');
     Route::get('cari', [LearningController::class, 'search'])->name('learning.search');
@@ -41,7 +43,7 @@ Route::middleware(['auth', 'verified', 'role:pelajar'])->group(function () {
     Route::post('umpan-balik', [FeedbackController::class, 'store'])->middleware('throttle:5,10')->name('feedback.store');
 });
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'active', 'verified', 'role:admin'])->group(function () {
     Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
     Route::post('admin/paths', [AdminController::class, 'storePath']);
     Route::put('admin/paths/{path}', [AdminController::class, 'updatePath']);
@@ -60,6 +62,12 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::put('admin/tutor-settings', [AdminController::class, 'updateTutorSettings'])->name('admin.tutor-settings.update');
     Route::post('admin/tutor-settings/test', [AdminController::class, 'testTutorSettings'])->middleware('throttle:5,1')->name('admin.tutor-settings.test');
     Route::put('admin/feedback/{feedback}', [AdminController::class, 'updateFeedback'])->name('admin.feedback.update');
+    Route::post('admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::put('admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::patch('admin/users/{user}/status', [AdminController::class, 'updateUserStatus'])->name('admin.users.status');
+    Route::post('admin/users/{user}/password-reset', [AdminController::class, 'sendUserPasswordReset'])->name('admin.users.password-reset');
+    Route::post('admin/users/{user}/verification', [AdminController::class, 'sendUserVerification'])->name('admin.users.verification');
+    Route::delete('admin/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.destroy');
     Route::delete('admin/{type}/{id}', [AdminController::class, 'destroy']);
 });
 

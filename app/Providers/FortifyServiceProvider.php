@@ -6,8 +6,10 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Http\Responses\RoleBasedLoginResponse;
 use App\Http\Responses\RoleBasedTwoFactorLoginResponse;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -37,6 +39,17 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+        Fortify::authenticateUsing(function (Request $request): ?User {
+            $username = Fortify::username();
+            $user = User::query()
+                ->where($username, $request->input($username))
+                ->where('is_active', true)
+                ->first();
+
+            return $user && Hash::check($request->string('password')->toString(), $user->password)
+                ? $user
+                : null;
+        });
     }
 
     /**

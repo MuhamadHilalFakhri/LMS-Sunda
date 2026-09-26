@@ -22,6 +22,10 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string $password
  * @property string $ui_locale
  * @property int $daily_goal
+ * @property string $role
+ * @property bool $is_active
+ * @property int $completed
+ * @property int $attempts
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property Carbon|null $two_factor_confirmed_at
@@ -48,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
             'daily_goal' => 'integer',
+            'is_active' => 'boolean',
         ];
     }
 }
