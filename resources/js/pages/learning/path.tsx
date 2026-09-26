@@ -6,17 +6,19 @@ import {
     Check,
     ChevronRight,
     CirclePlay,
-    Layers3,
     PenLine,
 } from 'lucide-react';
 import { moduleUrl, type LearningPath } from '@/types/learning';
+import { ModuleSaveButton } from '@/pages/learning/module-save-button';
 
 export default function Path({
     path,
     progress,
+    savedUnitIds,
 }: {
     path: LearningPath;
     progress: Record<number, string>;
+    savedUnitIds: number[];
 }) {
     const units = path.units ?? [];
     const lessons = units.flatMap((unit) => unit.lessons ?? []);
@@ -218,10 +220,14 @@ export default function Path({
                                             {unit.title}
                                         </h3>
                                     </div>
-                                    <Layers3
-                                        className="size-4 shrink-0 text-muted-foreground"
-                                        aria-hidden="true"
-                                    />
+                                    {unitLessons.length > 0 && (
+                                        <ModuleSaveButton
+                                            unitId={unit.id}
+                                            saved={savedUnitIds.includes(
+                                                unit.id,
+                                            )}
+                                        />
+                                    )}
                                 </div>
                                 {unit.description && (
                                     <p className="mt-4 line-clamp-2 min-h-10 text-xs leading-5 text-muted-foreground">
