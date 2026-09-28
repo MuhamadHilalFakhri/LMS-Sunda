@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { Plus } from 'lucide-react';
+import { Plus } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {

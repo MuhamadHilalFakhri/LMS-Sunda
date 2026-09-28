@@ -1,5 +1,5 @@
 import { t } from "@/lib/ui-language";
-import { BookOpen, ChevronRight, FileText, LibraryBig, Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { BookOpen, ChevronRight, FileText, LibraryBig, Pencil, Plus, Search, Trash2 } from '@/components/meya-icons';
 import { Button } from "@/components/ui/button";
 import AdminPathArtwork from "@/components/admin-path-artwork";
 import { Input } from "@/components/ui/input";

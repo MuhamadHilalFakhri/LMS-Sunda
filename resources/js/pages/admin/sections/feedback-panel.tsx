@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { router } from "@inertiajs/react";
-import { MessageSquareWarning } from "lucide-react";
+import { MessageSquareWarning } from '@/components/meya-icons';
 import PaginationControls from "@/components/pagination-controls";
 import { Empty } from "@/pages/admin/common-ui";
 import { FeedbackCard } from "@/pages/admin/feedback-card";

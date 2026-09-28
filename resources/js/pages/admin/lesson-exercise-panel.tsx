@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { CircleHelp, Pencil, Plus, Trash2 } from 'lucide-react';
+import { CircleHelp, Pencil, Plus, Trash2 } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 import type { Exercise, Lesson, Question } from '@/types/learning';
 import type { DeleteConfig } from '@/pages/admin/types';

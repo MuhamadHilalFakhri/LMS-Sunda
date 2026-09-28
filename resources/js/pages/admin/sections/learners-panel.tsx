@@ -13,7 +13,7 @@ import {
     UserRoundCheck,
     UserRoundX,
     Users,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import { t } from '@/lib/ui-language';
 import { Button } from '@/components/ui/button';
 import PaginationControls from '@/components/pagination-controls';

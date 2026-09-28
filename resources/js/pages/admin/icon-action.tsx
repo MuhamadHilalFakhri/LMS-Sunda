@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { Pencil } from 'lucide-react';
+import { Pencil } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 
 export function IconAction({

@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2 } from '@/components/meya-icons';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import type { Block, Exercise, Lesson, Question } from '@/types/learning';

@@ -3,7 +3,7 @@ import {
     Activity,
     Bot,
     MessageSquareWarning,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import type { TutorSettings } from '@/pages/admin/types';
 
 export function TutorStatusCards({ settings }: { settings: TutorSettings }) {

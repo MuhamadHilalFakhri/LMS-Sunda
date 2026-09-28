@@ -6,7 +6,7 @@ import {
     ChartNoAxesCombined,
     CheckCircle2,
     Users,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import type { Analytics } from '@/pages/admin/types';
 import { Empty } from '@/pages/admin/common-ui';
 

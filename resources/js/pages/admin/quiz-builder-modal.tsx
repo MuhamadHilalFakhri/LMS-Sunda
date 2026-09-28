@@ -2,7 +2,7 @@ import { t } from '@/lib/ui-language';
 import { router } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { Plus } from 'lucide-react';
+import { Plus } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,

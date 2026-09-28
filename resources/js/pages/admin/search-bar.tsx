@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { ListFilter, Search } from 'lucide-react';
+import { ListFilter, Search } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 

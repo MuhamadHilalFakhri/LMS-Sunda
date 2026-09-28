@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Link } from "@inertiajs/react";
-import { CaseSensitive, Pencil, Trash2 } from "lucide-react";
+import { CaseSensitive, Pencil, Trash2 } from '@/components/meya-icons';
 import PaginationControls from "@/components/pagination-controls";
 import { IconAction, Empty } from "@/pages/admin/common-ui";
 import { SearchBar } from "@/pages/admin/search-bar";

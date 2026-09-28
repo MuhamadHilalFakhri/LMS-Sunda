@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Link } from "@inertiajs/react";
-import { ArrowRight, BookOpen, ChevronRight, LibraryBig, Users } from "lucide-react";
+import { ArrowRight, BookOpen, ChevronRight, LibraryBig, Users } from '@/components/meya-icons';
 import { Button } from "@/components/ui/button";
 import { Status } from "@/pages/admin/status";
 import { Empty } from "@/pages/admin/common-ui";

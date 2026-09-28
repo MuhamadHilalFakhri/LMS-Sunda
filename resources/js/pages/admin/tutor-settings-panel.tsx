@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { router } from '@inertiajs/react';
-import { Bot, CheckCircle2, Save, ShieldCheck } from 'lucide-react';
+import { Bot, CheckCircle2, Save, ShieldCheck } from '@/components/meya-icons';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';

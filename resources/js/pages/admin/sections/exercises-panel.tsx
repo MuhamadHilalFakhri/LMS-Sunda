@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Link } from "@inertiajs/react";
-import { ChevronRight, FileQuestion, Pencil, Plus, Trash2 } from "lucide-react";
+import { ChevronRight, FileQuestion, Pencil, Plus, Trash2 } from '@/components/meya-icons';
 import { Button } from "@/components/ui/button";
 import PaginationControls from "@/components/pagination-controls";
 import { IconAction, Empty } from "@/pages/admin/common-ui";

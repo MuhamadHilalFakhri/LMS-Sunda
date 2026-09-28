@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 
 export function CollectionPagination({

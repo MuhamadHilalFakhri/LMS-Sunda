@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { FileText, Pencil, Plus, Trash2, Volume2 } from 'lucide-react';
+import { FileText, Pencil, Plus, Trash2, Volume2 } from '@/components/meya-icons';
 import { Button } from '@/components/ui/button';
 import type { Block, Lesson } from '@/types/learning';
 import { blockTypes } from '@/pages/admin/form-fields';

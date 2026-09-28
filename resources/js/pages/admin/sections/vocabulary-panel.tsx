@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Link } from "@inertiajs/react";
-import { BookOpen, Pencil } from "lucide-react";
+import { BookOpen, Pencil } from '@/components/meya-icons';
 import PaginationControls from "@/components/pagination-controls";
 import { IconAction, Empty } from "@/pages/admin/common-ui";
 import { SearchBar } from "@/pages/admin/search-bar";

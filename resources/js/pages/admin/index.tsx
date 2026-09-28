@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Head } from '@inertiajs/react';
-import { Plus } from 'lucide-react';
+import { Plus } from '@/components/meya-icons';
 
 import { Button } from '@/components/ui/button';
 
