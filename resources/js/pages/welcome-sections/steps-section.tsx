@@ -1,6 +1,10 @@
 import { t } from '@/lib/ui-language';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookOpen, faBullseye, faGraduationCap, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import {
+    BookOpen,
+    Exam,
+    GraduationCap,
+    Star,
+} from '@/components/meya-icons';
 import type { WelcomeMainProps } from '@/pages/welcome-types';
 
 export function StepsSection({ props }: { props: WelcomeMainProps }) {
@@ -14,14 +18,14 @@ export function StepsSection({ props }: { props: WelcomeMainProps }) {
                         </div>
                         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             {[
-                                { icon: faBookOpen, title: "Pilih kelas", description: "Bahasa Sunda atau Aksara Sunda." },
-                                { icon: faGraduationCap, title: "Ikuti pelajaran", description: "Materi ditata dalam unit yang runtut." },
-                                { icon: faBullseye, title: "Coba latihan", description: "Periksa pemahaman dan baca penjelasan." },
-                                { icon: faTrophy, title: "Lihat progres", description: "Kembali ke pelajaran yang terakhir dibuka." },
+                                { icon: BookOpen, title: "Pilih kelas", description: "Bahasa Sunda atau Aksara Sunda." },
+                                { icon: GraduationCap, title: "Ikuti pelajaran", description: "Materi ditata dalam unit yang runtut." },
+                                { icon: Exam, title: "Coba latihan", description: "Periksa pemahaman dan baca penjelasan." },
+                                { icon: Star, title: "Lihat progres", description: "Kembali ke pelajaran yang terakhir dibuka." },
                             ].map(({ icon: Icon, title, description }, index) => (
                                 <article key={title} className="rounded-lg border border-[#d9dde8] bg-white p-5 shadow-[0_2px_4px_rgba(40,46,62,0.06)]">
                                     <div className="flex items-center justify-between">
-                                        <span className="flex size-10 items-center justify-center rounded-lg bg-[#edefff] text-[#4255ff]"><FontAwesomeIcon icon={Icon} className="size-5" /></span>
+                                        <span className="flex size-10 items-center justify-center rounded-lg bg-[#edefff] text-[#4255ff]"><Icon className="size-5" /></span>
                                         <span className="text-xs font-semibold text-[#939bb4]">0{index + 1}</span>
                                     </div>
                                     <h3 className="mt-5 font-semibold">{t(title)}</h3>

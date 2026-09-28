@@ -1,7 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { ArrowRight } from '@/components/meya-icons';
 import { ScriptPractice } from '@/pages/welcome-script-practice';
 import type { WelcomeMainProps } from '@/pages/welcome-types';
 
@@ -20,7 +19,7 @@ export function ScriptSection({ props }: { props: WelcomeMainProps }) {
                                 ))}
                             </div>
                             <Link href={destination} className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#4255ff] px-5 text-sm font-semibold text-white hover:bg-[#3548eb]">
-                                {t("Jelajahi kelas Aksara Sunda")} <FontAwesomeIcon icon={faArrowRightLong} className="size-4" />
+                                {t("Jelajahi kelas Aksara Sunda")} <ArrowRight className="size-4" />
                             </Link>
                         </div>
                         <div className="rounded-[24px] bg-[#fbe4ef] p-5 sm:p-7">

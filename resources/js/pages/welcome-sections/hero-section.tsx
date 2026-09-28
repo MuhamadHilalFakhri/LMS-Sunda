@@ -1,15 +1,14 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faArrowDownLong,
-    faArrowRightLong,
-    faBookOpen,
-    faBullseye,
-    faGraduationCap,
-    faMessage,
-    faPenNib,
-} from '@fortawesome/free-solid-svg-icons';
+    ArrowDown,
+    ArrowRight,
+    BookOpen,
+    Edit,
+    Exam,
+    GraduationCap,
+    MessageQuestion,
+} from '@/components/meya-icons';
 import { HeroOrbitDecoration } from '@/pages/welcome-orbit-decoration';
 import { FeatureCard } from '@/pages/welcome-feature-card';
 import { featureDetails } from '@/pages/welcome-feature-data';
@@ -28,6 +27,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
         speechError,
         handleSectionNavigation,
     } = props;
+    const FeatureIcon = featureDetails[activeFeature].icon;
 
     return (
         <section className="landing-hero relative isolate pt-14 pb-16 text-center md:pt-20 md:pb-20">
@@ -38,10 +38,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                         data-hero="eyebrow"
                         className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#d9dde8] bg-white px-3 py-1.5 text-xs font-semibold text-[#586380]"
                     >
-                        <FontAwesomeIcon
-                            icon={faGraduationCap}
-                            className="size-4 text-[#4255ff]"
-                        />
+                        <GraduationCap className="size-4 text-[#4255ff]" />
                         {t('Ruang belajar Bahasa dan Aksara Sunda')}
                     </p>
                     <h1
@@ -71,10 +68,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                                     ? 'Lanjut belajar'
                                     : 'Mulai belajar gratis',
                             )}
-                            <FontAwesomeIcon
-                                icon={faArrowRightLong}
-                                className="size-4"
-                            />
+                            <ArrowRight className="size-4" />
                         </Link>
                         <a
                             href="#cara-belajar"
@@ -82,10 +76,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                             className="inline-flex min-h-11 items-center gap-2 px-2 text-sm font-medium text-[#4255ff] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff]"
                         >
                             {t('Jelajahi cara belajar')}
-                            <FontAwesomeIcon
-                                icon={faArrowDownLong}
-                                className="size-4"
-                            />
+                            <ArrowDown className="size-4" />
                         </a>
                     </div>
                 </div>
@@ -102,7 +93,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                     kind="language"
                     title="Bahasa Sunda"
                     description="Kosakata, ungkapan, dan konteks."
-                    icon={faBookOpen}
+                    icon={BookOpen}
                     tint="bg-[#dff4f7]"
                     active={activeFeature === 'language'}
                     onSelect={() => setActiveFeature('language')}
@@ -114,7 +105,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                     kind="script"
                     title="Aksara Sunda"
                     description="Baca dan susun karakter Sunda."
-                    icon={faPenNib}
+                    icon={Edit}
                     tint="bg-[#fbe4ef]"
                     active={activeFeature === 'script'}
                     onSelect={() => setActiveFeature('script')}
@@ -126,7 +117,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                     kind="practice"
                     title="Latihan bertahap"
                     description="Cek pemahaman setelah belajar."
-                    icon={faBullseye}
+                    icon={Exam}
                     tint="bg-[#e7e9ff]"
                     active={activeFeature === 'practice'}
                     onSelect={() => setActiveFeature('practice')}
@@ -138,7 +129,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                     kind="tutor"
                     title="Tutor AI"
                     description="Tanya materi dengan rujukan."
-                    icon={faMessage}
+                    icon={MessageQuestion}
                     tint="bg-[#ffeadb]"
                     active={activeFeature === 'tutor'}
                     onSelect={() => setActiveFeature('tutor')}
@@ -156,9 +147,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                 className="relative z-10 mx-auto mt-5 flex max-w-3xl flex-col items-start gap-4 rounded-lg border border-[#d9dde8] bg-white p-4 text-left shadow-[0_2px_4px_rgba(40,46,62,0.06)] sm:flex-row sm:items-center sm:p-5"
             >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#edefff] text-[#4255ff]">
-                    <FontAwesomeIcon
-                        icon={featureDetails[activeFeature].icon}
-                    />
+                    <FeatureIcon />
                 </span>
                 <div className="min-w-0 flex-1">
                     <h2 className="font-semibold">
@@ -175,7 +164,7 @@ export function HeroSection({ props }: { props: WelcomeMainProps }) {
                         className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-sm font-semibold text-[#4255ff] hover:bg-[#f6f7fb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff]"
                     >
                         {t('Lihat detail')}
-                        <FontAwesomeIcon icon={faArrowRightLong} />
+                        <ArrowRight />
                     </a>
                 </div>
             </div>

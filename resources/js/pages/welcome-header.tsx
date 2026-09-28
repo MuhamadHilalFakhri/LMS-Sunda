@@ -1,12 +1,7 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
 import AppLogoIcon from '@/components/app-logo-icon';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowRightLong,
-    faBars,
-    faXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { ArrowRight, Menu, X } from '@/components/meya-icons';
 import { sectionLinks } from '@/pages/welcome-feature-data';
 import type { Auth } from '@/types';
 import type { Dispatch, MouseEvent, RefObject, SetStateAction } from 'react';
@@ -85,10 +80,7 @@ export function WelcomeHeader({
                                   ? 'Lanjut belajar'
                                   : 'Daftar gratis',
                         )}
-                        <FontAwesomeIcon
-                            icon={faArrowRightLong}
-                            className="size-4"
-                        />
+                        <ArrowRight className="size-4" />
                     </Link>
                 </div>
 
@@ -112,10 +104,11 @@ export function WelcomeHeader({
                         onClick={() => setMobileMenuOpen((open) => !open)}
                         className="flex size-10 items-center justify-center rounded-lg border border-[#d9dde8] bg-white text-[#282e3e] hover:border-[#4255ff] hover:text-[#4255ff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff]"
                     >
-                        <FontAwesomeIcon
-                            icon={mobileMenuOpen ? faXmark : faBars}
-                            className="size-4"
-                        />
+                        {mobileMenuOpen ? (
+                            <X className="size-4" />
+                        ) : (
+                            <Menu className="size-4" />
+                        )}
                     </button>
                 </div>
             </div>

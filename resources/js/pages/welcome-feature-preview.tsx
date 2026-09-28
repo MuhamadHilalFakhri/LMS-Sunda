@@ -1,11 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faCheck,
-    faCircleQuestion,
-    faVolumeHigh,
-    faWandMagicSparkles,
-} from '@fortawesome/free-solid-svg-icons';
+import { Check, HelpCircle, Star, Volume } from '@/components/meya-icons';
 import { useState } from 'react';
 import type { FeatureKind } from '@/pages/welcome-feature-data';
 
@@ -45,8 +39,7 @@ export function FeaturePreview({
                             </span>
                             <span className="flex items-center gap-2 text-xs text-[#586380]">
                                 {t(meaning)}
-                                <FontAwesomeIcon
-                                    icon={faVolumeHigh}
+                                <Volume
                                     className={`size-3.5 text-[#4255ff] ${isSpeaking ? 'animate-pulse' : ''}`}
                                 />
                             </span>
@@ -54,10 +47,7 @@ export function FeaturePreview({
                     );
                 })}
                 <div className="flex items-center gap-2 pt-1 text-xs font-medium text-[#586380]">
-                    <FontAwesomeIcon
-                        icon={faVolumeHigh}
-                        className="size-4 text-[#4255ff]"
-                    />
+                    <Volume className="size-4 text-[#4255ff]" />
                     {speechError
                         ? t(speechError)
                         : speakingPhrase
@@ -107,14 +97,12 @@ export function FeaturePreview({
                                 className={`flex w-full items-center justify-between rounded-md border px-3 py-2 text-left transition-all ${selected ? (correct ? 'border-[#4255ff] bg-[#edefff] font-semibold text-[#4255ff]' : 'border-[#dc6673] bg-[#fff1f2] font-semibold text-[#a52d3a]') : 'border-[#d9dde8] hover:border-[#4255ff] hover:bg-[#f8f8ff]'}`}
                             >
                                 {answer}
-                                {selected && (
-                                    <FontAwesomeIcon
-                                        icon={
-                                            correct ? faCheck : faCircleQuestion
-                                        }
-                                        className="size-3.5"
-                                    />
-                                )}
+                                {selected &&
+                                    (correct ? (
+                                        <Check className="size-3.5" />
+                                    ) : (
+                                        <HelpCircle className="size-3.5" />
+                                    ))}
                             </button>
                         );
                     })}
@@ -146,10 +134,7 @@ export function FeaturePreview({
                 )}
             </div>
             <div className="flex items-center gap-1.5 pt-1 text-[#586380]">
-                <FontAwesomeIcon
-                    icon={faWandMagicSparkles}
-                    className="size-3.5 text-[#4255ff]"
-                />{' '}
+                <Star className="size-3.5 text-[#4255ff]" />{' '}
                 {t('Rujukan dari materi belajar')}
             </div>
         </div>

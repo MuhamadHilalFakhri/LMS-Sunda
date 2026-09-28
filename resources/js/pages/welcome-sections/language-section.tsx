@@ -1,7 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong, faCheck, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
+import { ArrowRight, Check, Volume } from '@/components/meya-icons';
 import type { WelcomeMainProps } from '@/pages/welcome-types';
 
 export function LanguageSection({ props }: { props: WelcomeMainProps }) {
@@ -36,7 +35,7 @@ export function LanguageSection({ props }: { props: WelcomeMainProps }) {
                                                 <span className="flex size-7 items-center justify-center rounded-full bg-[#edefff] text-xs font-semibold text-[#4255ff]">{index + 1}</span>
                                                 <span className="flex items-center gap-2 text-sm font-semibold">
                                                     {word}
-                                                    <FontAwesomeIcon icon={faVolumeHigh} className={`size-3.5 text-[#4255ff] ${speakingPhrase === word ? "animate-pulse" : ""}`} />
+                                                    <Volume className={`size-3.5 text-[#4255ff] ${speakingPhrase === word ? "animate-pulse" : ""}`} />
                                                 </span>
                                             </span>
                                             <span className="text-right text-xs text-[#586380]">{t(meaning)}</span>
@@ -60,7 +59,7 @@ export function LanguageSection({ props }: { props: WelcomeMainProps }) {
                                     </label>
                                 )}
                                 <div className="mt-5 flex items-center gap-2 text-xs font-medium text-[#586380]">
-                                    <FontAwesomeIcon icon={faVolumeHigh} className="size-4 text-[#4255ff]" />
+                                    <Volume className="size-4 text-[#4255ff]" />
                                     {speechError ? t(speechError) : speakingPhrase ? `${t("Sedang diputar")}: ${speakingPhrase}` : t("Klik ungkapan untuk mendengarkan pelafalan")}
                                 </div>
                                 <p className="mt-2 text-[11px] leading-5 text-[#717990]">
@@ -74,11 +73,11 @@ export function LanguageSection({ props }: { props: WelcomeMainProps }) {
                             <p className="mt-4 max-w-xl leading-7 text-[#586380]">{t("Pelajari arti, pelafalan, ragam tutur, dan konteks pemakaian melalui unit yang teratur. Setiap pelajaran menggabungkan penjelasan dan contoh yang bisa langsung dicoba.")}</p>
                             <ul className="mt-6 space-y-3 text-sm text-[#2e3856]">
                                 {["Ungkapan yang dekat dengan percakapan sehari-hari", "Contoh pemakaian beserta artinya", "Audio saat tersedia pada materi"].map((item) => (
-                                    <li key={item} className="flex items-start gap-2.5"><FontAwesomeIcon icon={faCheck} className="mt-0.5 size-4 shrink-0 text-[#4255ff]" />{t(item)}</li>
+                                    <li key={item} className="flex items-start gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-[#4255ff]" />{t(item)}</li>
                                 ))}
                             </ul>
                             <Link href={destination} className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full border border-[#4255ff] px-5 text-sm font-semibold text-[#4255ff] hover:bg-[#edefff]">
-                                {t("Lihat kelas Bahasa Sunda")} <FontAwesomeIcon icon={faArrowRightLong} className="size-4" />
+                                {t("Lihat kelas Bahasa Sunda")} <ArrowRight className="size-4" />
                             </Link>
                         </div>
                     </div>

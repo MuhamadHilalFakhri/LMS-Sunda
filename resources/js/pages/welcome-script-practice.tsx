@@ -1,6 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { RotateLeft } from '@/components/meya-icons';
 import { useState } from 'react';
 import { practiceAnswer } from '@/pages/welcome-feature-data';
 
@@ -44,7 +43,7 @@ export function ScriptPractice() {
                     aria-label={t('Ulangi latihan')}
                     className="flex size-9 items-center justify-center rounded-full border border-[#d9dde8] bg-white text-[#586380] hover:border-[#4255ff] hover:text-[#4255ff]"
                 >
-                    <FontAwesomeIcon icon={faRotateLeft} className="size-4" />
+                    <RotateLeft className="size-4" />
                 </button>
             </div>
             <div className="mt-4 flex items-center gap-2">

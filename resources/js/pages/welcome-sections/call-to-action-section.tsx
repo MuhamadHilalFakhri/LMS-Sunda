@@ -1,7 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { ArrowRight } from '@/components/meya-icons';
 import type { WelcomeMainProps } from '@/pages/welcome-types';
 
 export function CallToActionSection({ props }: { props: WelcomeMainProps }) {
@@ -15,7 +14,7 @@ export function CallToActionSection({ props }: { props: WelcomeMainProps }) {
                             <p className="mt-3 leading-7 text-[#586380]">{t("Buat akun untuk menyimpan progres dan melanjutkan kapan saja.")}</p>
                         </div>
                         <Link href={destination} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[#4255ff] px-6 text-sm font-semibold text-white hover:bg-[#3548eb]">
-                            {t(auth.user ? "Lanjut belajar" : "Buat akun gratis")} <FontAwesomeIcon icon={faArrowRightLong} className="size-4" />
+                            {t(auth.user ? "Lanjut belajar" : "Buat akun gratis")} <ArrowRight className="size-4" />
                         </Link>
                     </div>
                 </section>

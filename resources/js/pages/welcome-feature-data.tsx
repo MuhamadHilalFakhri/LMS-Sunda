@@ -1,10 +1,10 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { MeyaIcon } from '@/components/meya-icons';
 import {
-    faBookOpen,
-    faBullseye,
-    faMessage,
-    faPenNib,
-} from '@fortawesome/free-solid-svg-icons';
+    BookOpen,
+    Edit,
+    Exam,
+    MessageQuestion,
+} from '@/components/meya-icons';
 
 export type FeatureKind = 'language' | 'script' | 'practice' | 'tutor';
 
@@ -19,30 +19,30 @@ export const sectionLinks = [
 
 export const featureDetails: Record<
     FeatureKind,
-    { title: string; copy: string; href: string; icon: IconDefinition }
+    { title: string; copy: string; href: string; icon: MeyaIcon }
 > = {
     language: {
         title: 'Kelas Bahasa Sunda',
         copy: 'Mulai dari sapaan, kosakata, sampai ragam tutur dalam konteksnya.',
         href: '#kelas',
-        icon: faBookOpen,
+        icon: BookOpen,
     },
     script: {
         title: 'Ruang Aksara Sunda',
         copy: 'Pelajari karakter, rarangkén, membaca, dan menulis secara bertahap.',
         href: '#aksara',
-        icon: faPenNib,
+        icon: Edit,
     },
     practice: {
         title: 'Latihan setelah belajar',
         copy: 'Coba soal singkat dan lihat penjelasan untuk menguatkan pemahaman.',
         href: '#cara-belajar',
-        icon: faBullseye,
+        icon: Exam,
     },
     tutor: {
         title: 'Tanya Tutor AI',
         copy: 'Diskusikan materi dan lihat rujukan pelajaran yang digunakan.',
         href: '#tutor',
-        icon: faMessage,
+        icon: MessageQuestion,
     },
 };

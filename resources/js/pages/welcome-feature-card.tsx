@@ -1,6 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { MeyaIcon } from '@/components/meya-icons';
 import { FeaturePreview } from '@/pages/welcome-feature-preview';
 import type { FeatureKind } from '@/pages/welcome-feature-data';
 
@@ -19,7 +18,7 @@ export function FeatureCard({
     kind: FeatureKind;
     title: string;
     description: string;
-    icon: IconDefinition;
+    icon: MeyaIcon;
     tint: string;
     active: boolean;
     onSelect: () => void;
@@ -39,7 +38,7 @@ export function FeatureCard({
                 className="flex min-h-[72px] w-full items-start gap-3 rounded-md text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4255ff]"
             >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white text-[#282e3e]">
-                    <FontAwesomeIcon icon={Icon} className="size-5" />
+                    <Icon className="size-5" />
                 </span>
                 <div>
                     <h3 className="text-[17px] leading-6 font-bold">
