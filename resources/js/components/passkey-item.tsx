@@ -1,5 +1,5 @@
 import { t } from "@/lib/ui-language";
-import { KeyRound, Trash2 } from 'lucide-react';
+import { KeyRound, Trash2 } from '@/components/meya-icons';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {

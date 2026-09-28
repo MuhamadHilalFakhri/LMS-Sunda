@@ -6,7 +6,7 @@ import {
     LogOut,
     MessageSquarePlus,
     Settings2,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import { useState } from 'react';
 import {
     adminLinks,

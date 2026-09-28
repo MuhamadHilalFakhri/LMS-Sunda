@@ -1,5 +1,5 @@
 import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOut, Settings } from '@/components/meya-icons';
 import {
     DropdownMenuGroup,
     DropdownMenuItem,

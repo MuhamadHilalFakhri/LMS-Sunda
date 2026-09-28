@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, Search } from 'lucide-react';
+import { Menu, Search } from '@/components/meya-icons';
 import { useEffect, useState, type ReactNode } from 'react';
 import {
     Sheet,

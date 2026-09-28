@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from '@/components/meya-icons';
 import { t } from "@/lib/ui-language";
 
 export type PaginationMeta = {

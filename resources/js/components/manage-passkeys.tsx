@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { router } from '@inertiajs/react';
-import { KeyRound } from 'lucide-react';
+import { KeyRound } from '@/components/meya-icons';
 import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController';
 import Heading from '@/components/heading';
 import PasskeyItem from '@/components/passkey-item';

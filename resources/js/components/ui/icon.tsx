@@ -1,7 +1,7 @@
-import type { LucideIcon } from 'lucide-react';
+import type { MeyaIcon } from '@/components/meya-icons';
 
 interface IconProps {
-    iconNode?: LucideIcon | null;
+    iconNode?: MeyaIcon | null;
     className?: string;
 }
 

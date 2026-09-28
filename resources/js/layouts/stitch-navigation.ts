@@ -18,13 +18,13 @@ import {
     Tags,
     Users,
     Workflow,
-    type LucideIcon,
-} from 'lucide-react';
+    type MeyaIcon,
+} from '@/components/meya-icons';
 
-export type NavigationLink = { label: string; href: string; icon: LucideIcon };
+export type NavigationLink = { label: string; href: string; icon: MeyaIcon };
 export type NavigationGroup = {
     label: string;
-    icon: LucideIcon;
+    icon: MeyaIcon;
     children: NavigationLink[];
 };
 export type AdminNavigationItem = NavigationLink | NavigationGroup;

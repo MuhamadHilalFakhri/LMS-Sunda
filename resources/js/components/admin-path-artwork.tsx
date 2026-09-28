@@ -1,4 +1,4 @@
-import { BookOpen, PenLine } from "lucide-react";
+import { BookOpen, PenLine } from '@/components/meya-icons';
 import type { LearningPath } from "@/types/learning";
 import { t } from "@/lib/ui-language";
 

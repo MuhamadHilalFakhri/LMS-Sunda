@@ -2,7 +2,7 @@ import AppLogoIcon from '@/components/app-logo-icon';
 import { t } from '@/lib/ui-language';
 import type { LearningPath } from '@/types/learning';
 import { Link, usePage } from '@inertiajs/react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from '@/components/meya-icons';
 
 export default function ModuleLayout({
     children,

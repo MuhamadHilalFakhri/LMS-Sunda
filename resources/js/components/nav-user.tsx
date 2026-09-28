@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { ChevronsUpDown } from 'lucide-react';
+import { ChevronsUpDown } from '@/components/meya-icons';
 import {
     DropdownMenu,
     DropdownMenuContent,
