@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link, router, usePage } from "@inertiajs/react";
-import { ArrowLeft, BookOpen, Bug, CheckCircle2, Clock3, Lightbulb, MessageSquareText, Send } from "lucide-react";
+import { ArrowLeft, BookOpen, Bug, CheckCircle2, Clock3, Feedback, MessageSquareText, Send } from '@/components/meya-icons';
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ type FeedbackItem = {
 const categories = [
     { value: "content", label: "Materi belajar", icon: BookOpen },
     { value: "bug", label: "Masalah teknis", icon: Bug },
-    { value: "idea", label: "Ide atau saran", icon: Lightbulb },
+    { value: "idea", label: "Ide atau saran", icon: Feedback },
     { value: "other", label: "Lainnya", icon: MessageSquareText },
 ] as const;
 

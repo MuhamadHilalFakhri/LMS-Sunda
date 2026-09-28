@@ -1,7 +1,7 @@
 import PaginationControls, { type PaginationMeta } from "@/components/pagination-controls";
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowRight, BookOpen, RotateCcw, TriangleAlert } from "lucide-react";
+import { ArrowRight, BookOpen, RotateCcw, TriangleAlert } from '@/components/meya-icons';
 
 type ReviewItem = {
     id: number;

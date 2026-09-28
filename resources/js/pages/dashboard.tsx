@@ -6,8 +6,8 @@ import {
     CheckCircle2,
     Play,
     RotateCcw,
-    Sparkles,
-} from 'lucide-react';
+    Gauge,
+} from '@/components/meya-icons';
 import { useState } from 'react';
 import type { Auth } from '@/types';
 import { lessonUrl, type LearningPath } from '@/types/learning';
@@ -157,7 +157,7 @@ export default function Dashboard({
                         </div>
                         <div className="stitch-card p-5">
                             <span className="flex size-10 items-center justify-center rounded-xl bg-[#fff3d8] text-[#a34b05]">
-                                <Sparkles className="size-5" />
+                                <Gauge className="size-5" />
                             </span>
                             <p className="mt-4 text-2xl font-extrabold">
                                 {Math.round(

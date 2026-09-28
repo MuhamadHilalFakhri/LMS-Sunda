@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { BookOpen, ChevronRight, PenLine } from 'lucide-react';
+import { BookOpen, ChevronRight, PenLine } from '@/components/meya-icons';
 import type { Dispatch, SetStateAction } from 'react';
 import { pathUrl, type LearningPath } from '@/types/learning';
 

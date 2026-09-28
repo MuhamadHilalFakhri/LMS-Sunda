@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { Bookmark, BookmarkCheck, Volume2 } from 'lucide-react';
+import { Bookmark, BookmarkCheck, Volume2 } from '@/components/meya-icons';
 import { Block } from '@/types/learning';
 import {
     cleanBlockTitle,

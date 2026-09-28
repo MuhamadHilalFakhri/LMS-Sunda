@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { Check, Circle } from 'lucide-react';
+import { Check, Circle } from '@/components/meya-icons';
 import { moduleUrl, Lesson } from '@/types/learning';
 
 export type ModuleLesson = Pick<

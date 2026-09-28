@@ -1,5 +1,5 @@
 import { router } from '@inertiajs/react';
-import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { Bookmark, BookmarkCheck } from '@/components/meya-icons';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';

@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link, router } from '@inertiajs/react';
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2 } from '@/components/meya-icons';
 import { moduleUrl } from '@/types/learning';
 import type {
     ModuleLesson,

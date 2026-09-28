@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowLeft, ArrowRight, BookOpenCheck, Check, Compass, RotateCcw, Target, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpenCheck, Check, Compass, RotateCcw, X } from '@/components/meya-icons';
 
 type Result = {
     id: number;
@@ -73,7 +73,7 @@ export default function ResultPage({
                 <section className="mt-5 rounded-2xl border border-[#ddd8ff] bg-[#f6f4ff] p-5 md:p-6" aria-labelledby="next-study-title">
                     <div className="flex items-start gap-3">
                         <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#493ee5]">
-                            {recommendation.type === "review" ? <Target className="size-5" /> : recommendation.type === "path_complete" ? <Compass className="size-5" /> : <BookOpenCheck className="size-5" />}
+                            {recommendation.type === "review" ? <RotateCcw className="size-5" /> : recommendation.type === "path_complete" ? <Compass className="size-5" /> : <BookOpenCheck className="size-5" />}
                         </span>
                         <div className="min-w-0 flex-1">
                             <h2 id="next-study-title" className="font-extrabold">

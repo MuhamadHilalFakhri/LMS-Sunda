@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { t } from "@/lib/ui-language";
 import { Head, Link, router } from "@inertiajs/react";
-import { ArrowRight, ClipboardCheck, Clock3, GraduationCap, Headphones, RotateCcw, Search } from "lucide-react";
+import { ArrowRight, ClipboardCheck, Clock3, GraduationCap, Headphones, RotateCcw, Search } from '@/components/meya-icons';
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { Exercise } from "@/types/learning";

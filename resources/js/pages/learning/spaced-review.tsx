@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link, router } from "@inertiajs/react";
-import { ArrowLeft, ArrowRight, BookOpen, Check, Headphones, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, Check, CheckCircle, Headphones, RotateCcw } from '@/components/meya-icons';
 import { useEffect, useState } from "react";
 
 type ReviewCard = {
@@ -23,7 +23,7 @@ const ratings = [
     { value: "again", label: "Belum ingat", hint: "Ulangi sebentar lagi", icon: RotateCcw, className: "border-[#f2c6c3] bg-[#fff3f2] text-[#a03a39] hover:bg-[#ffe7e5]" },
     { value: "hard", label: "Sulit", hint: "Jadwalkan lebih cepat", icon: ArrowLeft, className: "border-[#ead7b4] bg-[#fff9ea] text-[#8b5a0a] hover:bg-[#fff1cf]" },
     { value: "good", label: "Ingat", hint: "Lanjutkan jadwal", icon: Check, className: "border-[#b9e1c9] bg-[#effaf3] text-[#17633a] hover:bg-[#e1f5e9]" },
-    { value: "easy", label: "Mudah", hint: "Jadwalkan lebih lama", icon: Sparkles, className: "border-[#d4cef9] bg-[#f4f1ff] text-[#493ee5] hover:bg-[#ebe7ff]" },
+    { value: "easy", label: "Mudah", hint: "Jadwalkan lebih lama", icon: CheckCircle, className: "border-[#d4cef9] bg-[#f4f1ff] text-[#493ee5] hover:bg-[#ebe7ff]" },
 ] as const;
 
 export default function SpacedReviewPage({

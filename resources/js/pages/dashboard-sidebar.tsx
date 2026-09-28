@@ -6,11 +6,11 @@ import {
     CaseSensitive,
     CheckCircle2,
     CircleHelp,
-    Flame,
+    Calendar,
     MessageSquareText,
     PenLine,
-    Target,
-} from 'lucide-react';
+    Flag,
+} from '@/components/meya-icons';
 import type { Lesson } from '@/types/learning';
 import { lessonUrl } from '@/types/learning';
 
@@ -38,7 +38,7 @@ export default function DashboardSidebar({
                         </h3>
                     </div>
                     <span className="flex size-10 items-center justify-center rounded-xl bg-[#fff3d8] text-[#a34b05]">
-                        <Target className="size-5" />
+                        <Flag className="size-5" />
                     </span>
                 </div>
                 <div className="mt-4 flex items-end justify-between gap-3">
@@ -47,7 +47,7 @@ export default function DashboardSidebar({
                         {learningGoal.target} {t('aktivitas hari ini')}
                     </p>
                     <span className="inline-flex items-center gap-1 text-xs font-bold text-[#a34b05]">
-                        <Flame className="size-4" /> {learningGoal.streak}{' '}
+                        <Calendar className="size-4" /> {learningGoal.streak}{' '}
                         {t('hari')}
                     </span>
                 </div>

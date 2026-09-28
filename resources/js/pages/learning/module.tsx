@@ -22,7 +22,7 @@ import {
     ChevronRight,
     CirclePlay,
     List,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import { useState } from 'react';
 
 export default function ModulePage({

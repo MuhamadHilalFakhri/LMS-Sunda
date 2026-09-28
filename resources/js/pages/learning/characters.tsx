@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowLeft, ArrowRight, CaseSensitive, Check, Copy, Search } from "lucide-react";
+import { ArrowLeft, ArrowRight, CaseSensitive, Check, Copy, Search } from '@/components/meya-icons';
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { sundaneseCharacters, type SundaneseCharacterCategory } from "@/data/sundanese-characters";

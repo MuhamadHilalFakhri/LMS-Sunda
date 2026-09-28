@@ -4,9 +4,9 @@ import {
     AlertCircle,
     ArrowRight,
     ShieldCheck,
-    Sparkles,
+    MessageQuestion,
     Trash2,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -124,7 +124,7 @@ export default function TutorPage({
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex min-w-0 items-center gap-3">
                         <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/20">
-                            <Sparkles className="size-5" />
+                            <MessageQuestion className="size-5" />
                         </span>
                         <div className="min-w-0">
                             <h1 className="text-xl font-extrabold md:text-2xl">

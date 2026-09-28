@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { BookOpen, ClipboardCheck, Clock3, PenLine } from 'lucide-react';
+import { BookOpen, ClipboardCheck, Clock3, PenLine } from '@/components/meya-icons';
 import type { ExercisePageData } from '@/pages/learning/exercise-page-types';
 
 type Props = {

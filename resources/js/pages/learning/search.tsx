@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowRight, BookOpen, Search } from "lucide-react";
+import { ArrowRight, BookOpen, Search } from '@/components/meya-icons';
 import type { Lesson } from "@/types/learning";
 import PaginationControls, { type PaginationMeta } from "@/components/pagination-controls";
 

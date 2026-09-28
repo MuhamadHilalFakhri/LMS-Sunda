@@ -1,4 +1,4 @@
-import { BookOpen, Languages, MessageSquareText, Sparkles } from "lucide-react";
+import { BookOpen, Edit, Languages, MessageSquareText } from '@/components/meya-icons';
 
 export type TutorMode = "question" | "conversation" | "writing" | "translation";
 export type Reference = { lesson_id: number; title: string };
@@ -41,7 +41,7 @@ export const modes: TutorModeOption[] = [
     {
         value: "writing",
         label: "Saran tulisan",
-        icon: Sparkles,
+        icon: Edit,
         hint: "Tempel kalimat Bahasa Sunda yang ingin diperiksa.",
         placeholder: "Tulis kalimat Bahasa Sunda yang ingin ditinjau...",
     },

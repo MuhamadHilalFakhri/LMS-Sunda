@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowRight, CheckCircle2, PenLine, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, PenLine } from '@/components/meya-icons';
 import PaginationControls, { type PaginationMeta } from "@/components/pagination-controls";
 import type { Exercise } from "@/types/learning";
 
@@ -47,7 +47,7 @@ export default function ScriptExercises({
             <aside className="mt-5 grid gap-4 md:grid-cols-2" aria-label={t("Panduan latihan aksara")}>
                 <div className="stitch-card p-5">
                     <div className="flex size-10 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#006c4a]">
-                        <Sparkles className="size-5" />
+                        <BookOpen className="size-5" />
                     </div>
                     <h3 className="mt-4 font-extrabold">{t("Mulai dari materi")}</h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">

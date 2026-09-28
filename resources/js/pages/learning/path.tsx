@@ -7,7 +7,7 @@ import {
     ChevronRight,
     CirclePlay,
     PenLine,
-} from 'lucide-react';
+} from '@/components/meya-icons';
 import { moduleUrl, type LearningPath } from '@/types/learning';
 import { ModuleSaveButton } from '@/pages/learning/module-save-button';
 

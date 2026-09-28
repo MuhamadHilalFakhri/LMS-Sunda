@@ -1,7 +1,7 @@
 import { t } from '@/lib/ui-language';
 
 import { Head, Link } from '@inertiajs/react';
-import { ArrowRight, Headphones } from 'lucide-react';
+import { ArrowRight, Headphones } from '@/components/meya-icons';
 
 import { AnswerField } from '@/pages/learning/exercise-answer-field';
 import { ExerciseHeader } from '@/pages/learning/exercise-header';

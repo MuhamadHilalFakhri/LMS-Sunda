@@ -1,6 +1,6 @@
 import { t } from "@/lib/ui-language";
 import { Link } from "@inertiajs/react";
-import { ArrowRight, BookOpen, Send, Sparkles, Trash2 } from "lucide-react";
+import { ArrowRight, BookOpen, MessageQuestion, Send, Trash2 } from '@/components/meya-icons';
 import type { FormEvent, RefObject } from "react";
 import { modes, parseReferences, formatTutorResponse, type Message, type PendingMessage, type TutorMode, type TutorModeOption, type TutorStatus } from "./types";
 
@@ -129,7 +129,7 @@ export default function TutorConversation({
                         )}
                     </> : (
                         <div className="flex h-full min-h-[220px] flex-col items-center justify-center px-4 text-center">
-                            <span className="flex size-14 items-center justify-center rounded-2xl bg-[#efedff] text-[#493ee5]"><Sparkles className="size-7" /></span>
+                            <span className="flex size-14 items-center justify-center rounded-2xl bg-[#efedff] text-[#493ee5]"><MessageQuestion className="size-7" /></span>
                             <h2 className="mt-4 font-extrabold">{t("Mulai percakapan baru")}</h2>
                             <p className="mt-2 max-w-md text-sm text-muted-foreground">{t("Ajukan pertanyaan tentang materi yang sudah diterbitkan untuk mulai belajar bersama tutor.")}</p>
                         </div>

@@ -3,7 +3,7 @@ import PaginationControls, {
 } from '@/components/pagination-controls';
 import { t } from '@/lib/ui-language';
 import { Head, Link, router } from '@inertiajs/react';
-import { ArrowRight, Bookmark, Layers3, Search } from 'lucide-react';
+import { ArrowRight, Bookmark, Layers3, Search } from '@/components/meya-icons';
 import { useState, type FormEvent } from 'react';
 import { ModuleSaveButton } from '@/pages/learning/module-save-button';
 

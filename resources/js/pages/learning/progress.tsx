@@ -1,7 +1,7 @@
 import PaginationControls, { type PaginationMeta } from "@/components/pagination-controls";
 import { t } from "@/lib/ui-language";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowRight, BookOpen, ClipboardCheck } from "lucide-react";
+import { ArrowRight, BookOpen, ClipboardCheck } from '@/components/meya-icons';
 
 type Progress = {
     id: number;

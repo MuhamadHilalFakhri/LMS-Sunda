@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { ArrowLeft, Menu } from 'lucide-react';
+import { ArrowLeft, Menu } from '@/components/meya-icons';
 import {
     ModuleMaterialList,
     type ModuleLesson,

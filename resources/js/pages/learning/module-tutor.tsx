@@ -1,7 +1,7 @@
 import { t } from '@/lib/ui-language';
 import type { Lesson } from '@/types/learning';
 import { Link } from '@inertiajs/react';
-import { ArrowUpRight, Bot, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import { BookOpen, Bot, ExpandDiagonal, LoaderCircle, MessageCircle, Send, X } from '@/components/meya-icons';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 
 type ChatMessage = {
@@ -111,14 +111,14 @@ export default function ModuleTutor({ lesson }: { lesson: Pick<Lesson, 'id' | 't
                             <h2 id="module-tutor-title" className="text-sm font-extrabold">{t('Tanya Tutor AI')}</h2>
                             <p className="truncate text-[11px] text-white/80">{lesson.title}</p>
                         </div>
-                        <Link href="/tutor" title={t('Buka Tutor AI penuh')} className="flex size-9 items-center justify-center rounded-lg text-white/90 hover:bg-white/15" aria-label={t('Buka Tutor AI penuh')}><ArrowUpRight className="size-4" /></Link>
+                        <Link href="/tutor" title={t('Buka Tutor AI penuh')} className="flex size-9 items-center justify-center rounded-lg text-white/90 hover:bg-white/15" aria-label={t('Buka Tutor AI penuh')}><ExpandDiagonal className="size-4" /></Link>
                         <button type="button" onClick={() => setOpen(false)} className="flex size-9 items-center justify-center rounded-lg text-white/90 hover:bg-white/15" aria-label={t('Tutup chat')}><X className="size-4" /></button>
                     </header>
 
                     <div ref={historyRef} className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-[#fbfaff] p-3.5" aria-live="polite">
                         {!messages.length && (
                             <div className="flex min-h-full flex-col justify-center gap-3 py-5">
-                                <span className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-[#efedff] text-[#493ee5]"><Sparkles className="size-6" /></span>
+                                <span className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-[#efedff] text-[#493ee5]"><BookOpen className="size-6" /></span>
                                 <div className="text-center">
                                     <p className="text-sm font-bold">{t('Ada yang ingin ditanyakan?')}</p>
                                     <p className="mt-1 text-xs leading-5 text-muted-foreground">{t('Tutor akan menjawab dengan konteks materi ini.')}</p>

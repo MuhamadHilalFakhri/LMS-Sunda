@@ -1,6 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Link } from '@inertiajs/react';
-import { ArrowLeft, CircleHelp, ClipboardCheck, PenLine } from 'lucide-react';
+import { ArrowLeft, CircleHelp, ClipboardCheck, PenLine } from '@/components/meya-icons';
 import type { Question } from '@/types/learning';
 import type { ExercisePageData } from '@/pages/learning/exercise-page-types';
 

@@ -1,5 +1,5 @@
 import { t } from '@/lib/ui-language';
-import { BookOpen, Lightbulb, MessageSquareText } from 'lucide-react';
+import { BookOpen, InfoCircle, MessageSquareText } from '@/components/meya-icons';
 import { Block } from '@/types/learning';
 import { registerExplanation } from '@/pages/learning/module-content-utils';
 
@@ -175,7 +175,7 @@ export function ContentBlockDetails({
                 !block.register &&
                 !block.region && (
                     <div className="flex gap-2 rounded-xl border border-[#dedbff] bg-[#f8f7ff] p-3 text-xs leading-5 text-muted-foreground">
-                        <Lightbulb className="mt-0.5 size-4 shrink-0 text-[#493ee5]" />
+                        <InfoCircle className="mt-0.5 size-4 shrink-0 text-[#493ee5]" />
                         {t(
                             'Cocokkan kata dengan artinya, lalu perhatikan contoh saat kata ini digunakan dalam kalimat.',
                         )}
