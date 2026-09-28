@@ -1,0 +1,229 @@
+.landing-hero__intro {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-hero__content {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-hero__mascot {
+    position: relative;
+    width: min(100%, 420px);
+    height: clamp(190px, 27vw, 280px);
+    margin: 0 auto;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.landing-mascot {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    touch-action: pan-y;
+    cursor: default;
+    user-select: none;
+}
+
+.landing-mascot.is-ready {
+    cursor: grab;
+}
+
+.landing-mascot.is-dragging {
+    cursor: grabbing;
+}
+
+.landing-mascot__canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease-out;
+}
+
+.landing-mascot.is-ready .landing-mascot__canvas {
+    opacity: 1;
+}
+
+.landing-mascot__fallback {
+    position: absolute;
+    inset: 12% 12% 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 48% 48% 24% 24%;
+    background: radial-gradient(
+        ellipse at 50% 84%,
+        rgb(66 85 255 / 14%),
+        rgb(223 244 247 / 68%) 44%,
+        transparent 74%
+    );
+    transition: opacity 180ms ease-out;
+}
+
+.landing-mascot.is-ready .landing-mascot__fallback {
+    opacity: 0;
+}
+
+.landing-mascot__halo {
+    position: absolute;
+    width: min(70%, 235px);
+    aspect-ratio: 1;
+    border: 1px solid rgb(66 85 255 / 18%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 22px rgb(66 85 255 / 4%),
+        0 0 0 48px rgb(66 85 255 / 3%);
+}
+
+.landing-mascot__script {
+    position: relative;
+    display: grid;
+    width: 54px;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid #d9dde8;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(40 46 62 / 9%);
+    color: #4255ff;
+    font-size: 28px;
+}
+
+.landing-mascot__hint {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 1;
+    border: 1px solid rgb(217 221 232 / 85%);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 88%);
+    padding: 6px 10px;
+    color: #586380;
+    font-size: 11px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.landing-mascot:focus-visible {
+    outline: 2px solid #4255ff;
+    outline-offset: 3px;
+}
+
+.landing-mascot__error {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 1;
+    color: #586380;
+    font-size: 12px;
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .landing-hero__mascot {
+        height: 340px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .landing-hero__intro {
+        display: grid;
+        min-height: 410px;
+        grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+        align-items: center;
+        gap: 1.5rem;
+        text-align: left;
+    }
+
+    .landing-hero__content {
+        text-align: left;
+    }
+
+    .landing-hero__content [data-hero='title'] {
+        max-width: 12em;
+        margin-inline: 0;
+        font-size: clamp(2.75rem, 4.5vw, 3.8rem);
+    }
+
+    .landing-hero__content [data-hero='copy'] {
+        max-width: 36rem;
+        margin-inline: 0;
+    }
+
+    .landing-hero__content [data-hero='actions'] {
+        justify-content: flex-start;
+    }
+
+    .landing-hero__mascot {
+        width: 100%;
+        height: 410px;
+        margin: 0;
+    }
+
+    .landing-orbit {
+        height: 440px;
+    }
+
+    .landing-orbit__ring {
+        top: 220px;
+        left: 78%;
+    }
+
+    .landing-orbit__ring--inner {
+        width: min(30vw, 350px);
+    }
+
+    .landing-orbit__ring--middle {
+        width: min(50vw, 590px);
+    }
+
+    .landing-orbit__ring--outer {
+        width: min(70vw, 790px);
+    }
+
+    .landing-orbit__card--upper-left {
+        top: 54px;
+        left: 66%;
+    }
+
+    .landing-orbit__card--upper-right {
+        top: 54px;
+        left: 91%;
+    }
+
+    .landing-orbit__card--middle-left {
+        left: 55%;
+    }
+
+    .landing-orbit__card--middle-right {
+        left: 98%;
+    }
+
+    .landing-orbit__card--lower-left {
+        top: 390px;
+        left: 67%;
+    }
+
+    .landing-orbit__card--lower-right {
+        top: 390px;
+        left: 89%;
+    }
+}
+
+@media (max-width: 767px) {
+    .landing-hero__mascot {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .landing-mascot__canvas,
+    .landing-mascot__fallback {
+        transition: none;
+    }
+}
