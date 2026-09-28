@@ -1,5 +1,5 @@
 import { Form, Head, Link, router, usePage } from "@inertiajs/react";
-import { Languages, ShieldCheck, UserRound } from "lucide-react";
+import { Languages, ShieldCheck, UserRound } from '@/components/meya-icons';
 import ProfileController from "@/actions/App/Http/Controllers/Settings/ProfileController";
 import InputError from "@/components/input-error";
 import { SecuritySettingsContent, type SecuritySettingsProps } from "@/pages/settings/security";

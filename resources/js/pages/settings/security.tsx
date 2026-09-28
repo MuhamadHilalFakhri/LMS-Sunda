@@ -1,5 +1,5 @@
 import { Form, Head } from "@inertiajs/react";
-import { KeyRound } from "lucide-react";
+import { KeyRound } from '@/components/meya-icons';
 import { useRef } from "react";
 import SecurityController from "@/actions/App/Http/Controllers/Settings/SecurityController";
 import DeleteUser from "@/components/delete-user";
