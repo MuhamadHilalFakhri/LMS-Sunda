@@ -8,7 +8,7 @@ import type { WelcomeMainProps } from '@/pages/welcome-types';
 export function ScriptSection({ props }: { props: WelcomeMainProps }) {
     const { destination } = props;
     return (
-<section id="aksara" tabIndex={-1} data-reveal className="scroll-mt-20 py-16 md:py-20">
+<section id="aksara" tabIndex={-1} className="scroll-mt-20 py-16 md:py-20">
                     <div className="mx-auto grid w-[min(100%-32px,1200px)] items-center gap-10 md:grid-cols-2 md:gap-16">
                         <div>
                             <p className="mb-3 text-xs font-semibold uppercase tracking-[.12em] text-[#4255ff]">{t("Aksara Sunda")}</p>
@@ -34,7 +34,7 @@ export function ScriptSection({ props }: { props: WelcomeMainProps }) {
                                 </div>
                                 <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
                                     {[["ᮃ", "a"], ["ᮄ", "i"], ["ᮅ", "u"], ["ᮆ", "é"], ["ᮇ", "o"], ["ᮈ", "e"], ["ᮉ", "eu"]].map(([glyph, latin]) => (
-                                        <div key={glyph} data-float={glyph === "ᮄ" ? "" : undefined} className="flex min-h-20 flex-col items-center justify-center rounded-lg bg-[#f6f7fb]">
+                                        <div key={glyph} className="flex min-h-20 flex-col items-center justify-center rounded-lg bg-[#f6f7fb]">
                                             <span lang="su" className="sunda-script text-3xl text-[#4255ff]">{glyph}</span>
                                             <span className="mt-1 text-xs font-medium text-[#586380]">{latin}</span>
                                         </div>

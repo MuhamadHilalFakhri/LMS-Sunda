@@ -1,8 +1,6 @@
 import { t } from '@/lib/ui-language';
 import { Head, usePage } from '@inertiajs/react';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import type { Auth } from '@/types';
 
@@ -15,7 +13,6 @@ import { sectionLinks, type FeatureKind } from '@/pages/welcome-feature-data';
 
 export default function Welcome() {
     const { auth } = usePage<{ auth: { user: Auth['user'] | null } }>().props;
-    const rootRef = useRef<HTMLDivElement>(null);
     const featurePanelRef = useRef<HTMLDivElement>(null);
     const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
     const [activeFeature, setActiveFeature] = useState<FeatureKind>('language');
@@ -118,84 +115,23 @@ export default function Welcome() {
     }, [mobileMenuOpen]);
 
     useEffect(() => {
-        const root = rootRef.current;
-        if (!root) return;
-
-        gsap.registerPlugin(ScrollTrigger);
-        const media = gsap.matchMedia();
-        media.add('(prefers-reduced-motion: no-preference)', () => {
-            const context = gsap.context(() => {
-                gsap.timeline({ defaults: { ease: 'power2.out' } })
-                    .from("[data-hero='eyebrow']", {
-                        y: 14,
-                        autoAlpha: 0,
-                        duration: 0.45,
-                    })
-                    .from(
-                        "[data-hero='title']",
-                        { y: 22, autoAlpha: 0, duration: 0.6 },
-                        '-=0.2',
-                    )
-                    .from(
-                        "[data-hero='copy'], [data-hero='actions']",
-                        { y: 14, autoAlpha: 0, duration: 0.45, stagger: 0.1 },
-                        '-=0.25',
-                    )
-                    .from(
-                        "[data-hero='cards']",
-                        { y: 24, autoAlpha: 0, duration: 0.55 },
-                        '-=0.1',
-                    );
-
-                gsap.utils
-                    .toArray<HTMLElement>('[data-reveal]')
-                    .forEach((element) => {
-                        gsap.from(element, {
-                            y: 24,
-                            autoAlpha: 0,
-                            duration: 0.65,
-                            ease: 'power2.out',
-                            scrollTrigger: {
-                                trigger: element,
-                                start: 'top 88%',
-                                once: true,
-                            },
-                        });
-                    });
-
-                gsap.to('[data-float]', {
-                    y: -9,
-                    rotation: 2,
-                    duration: 2.3,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut',
-                    stagger: 0.35,
-                });
-            }, root);
-
-            return () => context.revert();
-        });
-
-        return () => media.revert();
-    }, []);
-
-    useEffect(() => {
         if (
             !featurePanelRef.current ||
             window.matchMedia('(prefers-reduced-motion: reduce)').matches
         )
             return;
-        gsap.fromTo(
-            featurePanelRef.current,
-            { y: 8, autoAlpha: 0.65 },
-            { y: 0, autoAlpha: 1, duration: 0.28, ease: 'power2.out' },
+        const animation = featurePanelRef.current.animate(
+            [
+                { transform: 'translateY(8px)', opacity: 0.75 },
+                { transform: 'translateY(0)', opacity: 1 },
+            ],
+            { duration: 220, easing: 'ease-out' },
         );
+        return () => animation.cancel();
     }, [activeFeature]);
 
     return (
         <div
-            ref={rootRef}
             className="landing-page min-h-screen bg-[#f6f7fb] text-[#282e3e]"
         >
             <Head title={t('Belajar Bahasa dan Aksara Sunda')}>

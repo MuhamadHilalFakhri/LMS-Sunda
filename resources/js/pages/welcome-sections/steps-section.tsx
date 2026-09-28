@@ -5,7 +5,7 @@ import type { WelcomeMainProps } from '@/pages/welcome-types';
 
 export function StepsSection({ props }: { props: WelcomeMainProps }) {
     return (
-<section id="cara-belajar" tabIndex={-1} data-reveal className="scroll-mt-20 py-16 md:py-20">
+<section id="cara-belajar" tabIndex={-1} className="scroll-mt-20 py-16 md:py-20">
                     <div className="mx-auto w-[min(100%-32px,1200px)]">
                         <div className="mx-auto max-w-2xl text-center">
                             <p className="mb-3 text-xs font-semibold uppercase tracking-[.12em] text-[#4255ff]">{t("Cara belajar")}</p>

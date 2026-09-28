@@ -7,7 +7,7 @@ import type { WelcomeMainProps } from '@/pages/welcome-types';
 export function LanguageSection({ props }: { props: WelcomeMainProps }) {
     const { destination, playPhrase, speakingPhrase, speechError, voices, selectedVoiceURI, setSelectedVoiceURI } = props;
     return (
-<section id="kelas" tabIndex={-1} data-reveal className="scroll-mt-20 border-y border-[#e7e9f0] bg-white py-16 md:py-20">
+<section id="kelas" tabIndex={-1} className="scroll-mt-20 border-y border-[#e7e9f0] bg-white py-16 md:py-20">
                     <div className="mx-auto grid w-[min(100%-32px,1200px)] items-center gap-10 md:grid-cols-2 md:gap-16">
                         <div className="order-2 rounded-[24px] bg-[#edefff] p-5 sm:p-7 md:order-1">
                             <div className="rounded-lg bg-white p-5 shadow-[0_4px_16px_rgba(40,46,62,0.1)] sm:p-6">

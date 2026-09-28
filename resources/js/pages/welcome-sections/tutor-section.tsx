@@ -5,7 +5,7 @@ import type { WelcomeMainProps } from '@/pages/welcome-types';
 
 export function TutorSection({ props }: { props: WelcomeMainProps }) {
     return (
-<section id="tutor" tabIndex={-1} data-reveal className="scroll-mt-20 border-y border-[#e7e9f0] bg-white py-16 md:py-20">
+<section id="tutor" tabIndex={-1} className="scroll-mt-20 border-y border-[#e7e9f0] bg-white py-16 md:py-20">
                     <div className="mx-auto grid w-[min(100%-32px,1200px)] items-center gap-10 md:grid-cols-[.9fr_1.1fr] md:gap-16">
                         <div className="rounded-[24px] bg-[#ffeadb] p-5 sm:p-7">
                             <div className="overflow-hidden rounded-lg bg-white shadow-[0_4px_16px_rgba(40,46,62,0.1)]">
